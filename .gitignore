@@ -20,6 +20,7 @@
 *.lai
 *.la
 *.a
+*.user
 *.lib
 
 # Executables
