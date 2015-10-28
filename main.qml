@@ -8,7 +8,8 @@ import "UIElements"
 ApplicationWindow {
     title: qsTr("RobonAUT Diagnosztika")
     visible: true
-
+    height: 720
+    width: 1280
     menuBar: MenuBar {
         Menu {
             title: qsTr("File")
@@ -41,13 +42,17 @@ ApplicationWindow {
                 enabled: false
             }
         }
+
     }
 
 
     LineSensor {
-        anchors.bottom: parent
-        anchors.right: parent
+        anchors.top: parent.top
+        anchors.right: parent.right
+
+        //anchors.margins: 20
     }
+
 
 
 
