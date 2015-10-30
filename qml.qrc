@@ -3,6 +3,5 @@
         <file>main.qml</file>
         <file>MainForm.ui.qml</file>
         <file>UIElements/LineSensor.ui.qml</file>
-        <file>UIElements/ControlPanel.qml</file>
     </qresource>
 </RCC>
