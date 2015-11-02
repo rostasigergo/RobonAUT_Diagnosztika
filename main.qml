@@ -9,6 +9,7 @@ import "UIElements"
 //TODO: Button ColorAnimation
 //TODO: Adatok megjelenítése
 //TODO: Diagram, mit? választható?
+//Ötlet: kiválsztható típusok log-ban
 
 
 ApplicationWindow {
@@ -96,7 +97,7 @@ Item {
                                 duration: 200
                             }
                             onClicked: {
-                                log({ message: "Start...", colorCode: "blue" });
+                                log({ message: "Start...", colorCode: "green" });
                             }
 
                         }
@@ -132,10 +133,10 @@ Item {
 
                             text: qsTr("Start")
                             onClicked: {
-                                log({ message: "Gyorskatt", colorCode: "blue" });
+                                log({ message: "Clicked...", colorCode: "blue" });
                             }
                             onActivated: {
-                                log({ message: "Bumm.....", colorCode: "red" });
+                                log({ message: "Activated...", colorCode: "red" });
                             }
                         }
                     }
@@ -152,7 +153,7 @@ Item {
                     // ???
                     ColumnLayout {
                     Text{
-                        text: qsTr("Akkumulátor feszültség")
+                        text: qsTr("Akkumulátor feszültség:")
                         Layout.fillWidth: true
                         height: 10
                     }
@@ -162,12 +163,12 @@ Item {
                         height: 10
                     }
                     Text{
-                        text: qsTr("Adat...")
+                        text: qsTr("Adat 1...")
                         Layout.fillWidth: true
                         height: 10
                     }
                     Text{
-                        text: qsTr("Adat...")
+                        text: qsTr("Adat 2...")
                         Layout.fillWidth: true
                         height: 10
                     }
@@ -182,39 +183,44 @@ Item {
                 Layout.minimumWidth: 200
                 radius: 10
                 color: "lightsteelblue"
-
-            ListView {
-                id: eventLogger
-                anchors.fill: parent
-                //highlight: Rectangle { color: "blue"; radius: 5 }
-                delegate: GroupBox {
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                    Row {
-                        id: row2
-                        Rectangle {
-                            width: 40
-                            height: 20
-                            color: colorCode
+                ScrollView {
+                    anchors.fill: parent
+                    ListView {
+                        id: eventLogger
+                        anchors.fill: parent
+                        //highlight: Rectangle { color: "blue"; radius: 5 }
+                        delegate: GroupBox {
+                            anchors.left: parent.left
+                            anchors.right: parent.right
+                            Row {
+                                id: row2
+                                Rectangle {
+                                    width: 40
+                                    height: 20
+                                    color: colorCode
+                                }
+                            Text {
+                                text: message
+                                anchors.verticalCenter: parent.verticalCenter
+                                font.bold: true
+                                }
+                            spacing: 10
+                                }
                         }
-                        Text {
-                            text: message
-                            anchors.verticalCenter: parent.verticalCenter
-                            font.bold: true
+                        model: ListModel {
+                            id: eventLogModel
+                            ListElement {
+                                message: "Program indítás..."
+                                colorCode: "green"
+                                        }
+                                }
+                        onCountChanged: {
+                            eventLogger.currentIndex = eventLogger.count -1;
+                            }
                         }
-                        spacing: 10
-                    }
-                }
-                model: ListModel {
-                    id: eventLogModel
-                    ListElement {
-                        message: "Program indítás..."
-                        colorCode: "green"
                     }
                 }
             }
-            }
-        }
         ColumnLayout {
             //LineSensor
             Layout.fillWidth: true
@@ -255,6 +261,8 @@ Item {
                     }
                 }
             }
+            property real velocity: 0
+            property real direction: 0
             //Sebbesség
             RowLayout {
                 id: gaugebox
@@ -274,7 +282,7 @@ Item {
                         CircularGauge {
                            id: speedgauge
                            scale: 1
-                           value: 24 * velo_scale
+                           value: 0 * velo_scale
                        }
                         ComboBox {
                          //currentIndex: 3
@@ -284,23 +292,29 @@ Item {
                              ListElement { text: "Sebesség     [Km/h]"; color: "Green" }
                              ListElement { text: "Sebesség     [m/s]"; color: "Green" }
                              ListElement { text: "Szögsebesség [deg/s]"; color: "Green" }
+                             //Szögsebesség motortengelyre
+                             //Szögsebesség tengelyre
+                             //RPM kerékre
                            }
+                         property real attetel: 1
+                         property real kerekatmero: 0.1 //10cm 0.1m
                             onCurrentIndexChanged: {
                                 //console.debug(cbItems.get(currentIndex).text + ", " + cbItems.get(currentIndex).color)
                                 switch(currentIndex){
                                 case 0:
-                                    velo_scale = 1;
-                                    speedgauge.maximumValue = 100;
+                                    velo_scale = 0.5*kerekatmero/attetel*3.6;
+                                    speedgauge.maximumValue = 72;
                                     break;
                                 case 1:
-                                    velo_scale = 0.5;
-                                    speedgauge.maximumValue = 60;
+                                    velo_scale = 0.5*kerekatmero/attetel;//d->r 0.5,
+                                    speedgauge.maximumValue = 27;//20
                                     break;
                                 case 2:
-                                    velo_scale = 1.5;
-                                    speedgauge.maximumValue = 90;
+                                    velo_scale = 1;
+                                    speedgauge.maximumValue = 400*attetel;
                                     break;
                                 }
+                                speedgauge.value = slider1.value * velo_scale;//! frissítés váltáskor
 
                             }
                          }
@@ -321,6 +335,7 @@ Item {
                             Layout.fillWidth: true
                         }
                         CircularGauge {
+                            id: directiongauge
                             minimumValue: -30
                             maximumValue: 30
                             value: 0
@@ -331,11 +346,34 @@ Item {
             }
             //Üres terület
             GroupBox {
+                title: qsTr("UI Tesztelése:")
                 Layout.fillHeight: true
                 anchors.right: groupBox1.right
                 anchors.left: groupBox1.left
-                //Layout.fillWidth: true
+                ColumnLayout {
+                    Text {
+                        text: qsTr("UI tesztelése:")
+                    }
+                    Slider {
+                        id: slider1
+                        minimumValue: 0
+                        maximumValue: 400
+                        onValueChanged: {
+                            speedgauge.value = value*velo_scale;//
+                        }
+                    }
+                    Slider {
+                        minimumValue: -30
+                        maximumValue: 30
+                        onValueChanged: {
+                            directiongauge.value = value;//irany
+                        }
+                    }
+
+
+                }
             }
+
         }
     }
 }
