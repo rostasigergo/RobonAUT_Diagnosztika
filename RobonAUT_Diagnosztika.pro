@@ -3,7 +3,9 @@ TEMPLATE = app
 QT += qml quick
 CONFIG += c++11
 
-SOURCES += main.cpp
+SOURCES += main.cpp \
+    StvApplication.cpp \
+    MainWindowsEventHandling.cpp
 
 RESOURCES += qml.qrc
 
@@ -16,5 +18,10 @@ include(deployment.pri)
 FORMS += \
     UIElements/LineSensor.ui \
 
-DISTFILES +=
+DISTFILES += \
+    MainForm.ui.qml
+
+HEADERS += \
+    StvApplication.h \
+    MainWindowsEventHandling.h
 

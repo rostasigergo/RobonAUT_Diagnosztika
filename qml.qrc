@@ -1,7 +1,7 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
-        <file>MainForm.ui.qml</file>
+        <file>MainForm.qml</file>
         <file>UIElements/LineSensor.ui.qml</file>
     </qresource>
 </RCC>
