@@ -6,7 +6,8 @@ CONFIG += c++14
 SOURCES += main.cpp \
     communication.cpp \
     RobotState.cpp \
-    robotproxy.cpp
+    robotproxy.cpp \
+    robotstatehistory.cpp
 
 RESOURCES += qml.qrc
 
@@ -19,5 +20,6 @@ include(deployment.pri)
 HEADERS += \
     communication.h \
     RobotState.h \
-    robotproxy.h
+    robotproxy.h \
+    robotstatehistory.h
 
