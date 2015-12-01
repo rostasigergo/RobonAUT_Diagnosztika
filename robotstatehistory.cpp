@@ -2,14 +2,17 @@
 
 RobotStateHistory::RobotStateHistory(QObject *parent) : QObject(parent)
 {
-    /*int i;
+    int i;
     std::unique_ptr<RobotState> p;
+    QList<int> list;
+    list.append(1);
+    list.append(2);
 
     for(i = 0; i < 10; i++)
     {
-        p = std::make_unique<RobotState>(RobotState::Status::Auto_crashed, i, i, i, i, i, QList<int>(), QList<int>());
-        _history.append(p);
-    }*/
+        p = std::make_unique<RobotState>(RobotState::Status::Auto_crashed, i, i, i, i, i, list, list);
+        _history.push_back(std::move(p));
+    }
 }
 
 QQmlListProperty<RobotState> RobotStateHistory::historyList()
@@ -30,4 +33,9 @@ int RobotStateHistory::historyListCount(QQmlListProperty<RobotState> *historyLis
     RobotStateHistory *history = qobject_cast<RobotStateHistory *>(historyList->object);
 
     return history->_history.size();
+}
+
+RobotState* RobotStateHistory::at(int pos)
+{
+    return _history.at(pos).get();
 }

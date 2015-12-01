@@ -5,6 +5,7 @@
 #include <QList>
 #include <QQmlListProperty>
 #include <memory>
+#include <vector>
 #include "RobotState.h"
 
 class RobotStateHistory : public QObject
@@ -18,12 +19,14 @@ public:
     static RobotState* historyListAt(QQmlListProperty<RobotState> *historyList, int pos);
     static int historyListCount(QQmlListProperty<RobotState> *historyList);
 
+    RobotState* at(int pos);
+
 signals:
     void historyListChanged();
 
 public slots:
 private:
-    QList<std::unique_ptr<RobotState>> _history;
+    std::vector<std::unique_ptr<RobotState>> _history;
 };
 
 #endif // ROBOTSTATEHISTORY_H

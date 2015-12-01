@@ -88,3 +88,8 @@ QDataStream &operator>>(QDataStream& stream, RobotState& state)
     state.ReadFrom(stream);
     return stream;
 }
+
+void RobotState::incrementSpeed()
+{
+    this->setSpeed(this->speed() + 1);
+}

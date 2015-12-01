@@ -2,6 +2,7 @@ import QtQuick 2.3
 import QtQuick.Window 2.2
 import QtQuick.Layouts 1.2
 import QtQuick.Controls 1.4
+import com.RobotState 1.0
 
 Window {
     visible: true
@@ -43,6 +44,12 @@ Window {
         }
         Text {
             text: "Kapcsolódva: " + (rp.isOnline ? "igen" : "nem");
+        }
+        Text {
+            text: "History sebesség: " + h.historyList[0].speed;
+        }
+        Text {
+            text: "History lista hossz: " + h.historyList.length;
         }
 
         anchors.fill: parent

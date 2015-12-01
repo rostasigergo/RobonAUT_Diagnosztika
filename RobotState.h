@@ -92,6 +92,7 @@ signals:
     void front_lineChanged();
     void back_lineChanged();
 public slots:
+    void incrementSpeed();
 
 private:
 
