@@ -216,29 +216,41 @@ Item {
                 ColumnLayout {
                     anchors.bottom: parent.bottom
                     anchors.bottomMargin: 1
-                    //spacing: 50
+                    spacing: 1
                     RowLayout {
+                        id: rowl1
                         Layout.fillWidth: true
+                        Layout.minimumHeight: 65
                         Repeater{
                             id: sensor_row1
                             model: 24
-                            Gauge {
-                                width: 24
-                                height: 65
-                                value: 57
-                                maximumValue: 255
+                            Rectangle {
+                                anchors.bottom: parent.bottom
+                                width: 14
+                                height: 25
+                                color: "lightsteelblue"
+                                Text {
+                                    text: parent.height //*100/65 -> %
+                                    font.pointSize: 7
+                                    color: "black"
+                                    anchors.bottom: parent.bottom
+                                    anchors.horizontalCenter: parent.horizontalCenter
+                                }
                             }
                         }
                     }
 
                     RowLayout {
+                        id: rowl2
                         Layout.fillWidth: true
+                        height: 7
                         Repeater {
                             model: 24
                             Rectangle {
                                 // id: sensor1
-                                width: 24
-                                height: 7
+                                anchors.bottom: parent.bottom
+                                anchors.top: parent.top
+                                width: 14
                                 color: "blue"
                                 border.color: "black"
                                 border.width: 1
@@ -246,27 +258,39 @@ Item {
                         }
                     }
                     RowLayout {
+                        id: rowl3
                         Layout.fillWidth: true
+                        Layout.minimumHeight: 65
                         Repeater{
                             id: sensor_row2
                             model: 24
-                            Gauge {
+                            Rectangle {
+                                anchors.bottom: parent.bottom
                                 width: 14
-                                height: 65
-                                value: 57
-                                maximumValue: 255
+                                height: 44
+                                color: "lightsteelblue"
+                                Text {
+                                    text: parent.height //*100/65 -> %
+                                    font.pointSize: 7
+                                    color: "black"
+                                    anchors.bottom: parent.bottom
+                                    anchors.horizontalCenter: parent.horizontalCenter
+                                }
                             }
+
                         }
                     }
 
                     RowLayout {
+                        id: rowl4
                         Layout.fillWidth: true
+                        height: 7
                         Repeater {
                             model: 24
                             Rectangle {
-                                // id: sensor1
+                                anchors.top: parent.top
+                                anchors.bottom: parent.bottom
                                 width: 14
-                                height: 7
                                 color: "blue"
                                 border.color: "black"
                                 border.width: 1
@@ -371,6 +395,7 @@ Item {
                         maximumValue: 400
                         onValueChanged: {
                             speedgauge.value = value*velo_scale;//
+
                         }
                     }
                     Slider {
