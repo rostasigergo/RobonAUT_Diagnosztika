@@ -48,34 +48,70 @@ Item {
                                 log({ message: "Stop...", colorCode: "red" });
                             }
                         }
+                        Text {
+                            Layout.fillWidth: true
+                            text: qsTr("Frissítési sebesség: ")
+                        }
                         ComboBox {
                             Layout.fillWidth: true
                             model: ListModel {
                                 id: cbItems2
-                                ListElement { text: "Esetleg ha"; color: "Green" }
-                                ListElement { text: "kellene üzemmódokat"; color: "Green" }
-                                ListElement { text: "kiválasztani"; color: "Green" }
+                                ListElement { text: "100 ms"; }
+                                ListElement { text: "250 ms"; }
+                                ListElement { text: "500 ms"; }
+                                ListElement { text: "1000 ms"; }
+                                ListElement { text: "2000 ms"; }
+                            }
+                            onCurrentIndexChanged: {
+                                switch(currentIndex) {
+                                case 0:
+                                       timer.interval = 100;
+                                       break;
+                                case 1:
+                                       timer.interval = 250;
+                                       break;
+                                case 2:
+                                       timer.interval = 500;
+                                       break;
+                                case 3:
+                                       timer.interval = 1000;
+                                       break;
+                                case 4:
+                                       timer.interval = 2000;
+                                       break;
+                                }
                             }
                         }
-                        Button {
+                        /*Button {
                             id: button3
                             Layout.fillWidth: true
                             text: qsTr("Beállít")
                             onClicked: {
                                 log({ message: "Beállítás...", colorCode: "yellow" });
                             }
-                        }
+                        }*/
                         DelayButton {
                             id: button4
                             Layout.fillWidth: true
-                            //anchors.verticalCenter: parent.verticalCenter
 
-                            text: qsTr("Start")
+                            text: qsTr("Adatok frissítése")
                             onClicked: {
-                                log({ message: "Clicked...", colorCode: "blue" });
+                                log({ message: "Frissítés...", colorCode: "blue" });
+                                //rp.refreshState();
+
                             }
                             onActivated: {
-                                log({ message: "Activated...", colorCode: "red" });
+                                log({ message: "Automatikus frissítés...", colorCode: "red" });
+                                timer.start();
+                            }
+                            // enabled: rp.isOnline;
+                        }
+                        Timer {
+                            id: timer
+                            repeat: true
+                            onTriggered: {
+                                log({ message: "Timer triggered...", colorCode: "red" });
+                                //rp.refreshState();
                             }
                         }
                     }
@@ -86,28 +122,39 @@ Item {
                     Layout.fillWidth: true
                     Layout.minimumHeight: controlpanel.height
                     Layout.minimumWidth: 260
-                    //Ötletek:
-                    // rowLayout-al 2 oszlop
-                    // ListView
-                    // ???
                     ColumnLayout {
                     Text{
-                        text: qsTr("Akkumulátor feszültség:")
+                        text: "Kapcsolódva: " //+ (rp.isOnline ? "igen" : "nem");
                         Layout.fillWidth: true
                         height: 10
                     }
                     Text{
-                        text: qsTr("Státusz")
+                        text: "Státusz: "// + robot.statusName;
                         Layout.fillWidth: true
                         height: 10
                     }
                     Text{
-                        text: qsTr("Adat 1...")
+                        text: "Akkumulátor feszültség: "// + robot.battery;
                         Layout.fillWidth: true
                         height: 10
                     }
                     Text{
-                        text: qsTr("Adat 2...")
+                        text: "Sebesség: "//  + robot.speed;
+                        Layout.fillWidth: true
+                        height: 10
+                    }
+                    Text{
+                        text: "Szervo: "//  + robot.servo;
+                        Layout.fillWidth: true
+                        height: 10
+                    }
+                    Text{
+                        text: "History sebesség: " //+ h.historyList[0].speed;
+                        Layout.fillWidth: true
+                        height: 10
+                    }
+                    Text{
+                        text: "History lista hossz: "// + h.historyList.length;
                         Layout.fillWidth: true
                         height: 10
                     }
@@ -222,6 +269,7 @@ Item {
                            id: speedgauge
                            scale: 1
                            value: 0 * velo_scale
+                           //value: spedgauge.value = velo_scale * robot.speed
                        }
                         ComboBox {
                          //currentIndex: 3
@@ -231,9 +279,6 @@ Item {
                              ListElement { text: "Sebesség     [Km/h]"; color: "Green" }
                              ListElement { text: "Sebesség     [m/s]"; color: "Green" }
                              ListElement { text: "Szögsebesség [deg/s]"; color: "Green" }
-                             //Szögsebesség motortengelyre
-                             //Szögsebesség tengelyre
-                             //RPM kerékre
                            }
                             onCurrentIndexChanged: {
                                 //console.debug(cbItems.get(currentIndex).text + ", " + cbItems.get(currentIndex).color)
@@ -252,7 +297,7 @@ Item {
                                     break;
                                 }
                                 speedgauge.value = slider1.value * velo_scale;//! frissítés váltáskor
-
+                                //spedgauge.value = velo_scale * robot.speed;
                             }
                          }
                     }
@@ -276,6 +321,7 @@ Item {
                             minimumValue: -30
                             maximumValue: 30
                             value: 0
+                            //value: velo_scale * robot.servo
                             scale: 1
                         }
                     }
@@ -313,37 +359,5 @@ Item {
 
         }
     }
-
-
-    //WASD
-    /*
-    Keys.onPressed: {
-        if (event.key == Qt.UpArrow) {
-            qDebug() << "OnPressed UP";
-        }
-        if (event.key == Qt.DownArrow){
-            qDebug() << "OnPressed Down";
-        }
-        if (event.key == Qt.LeftArrow) {
-            qDebug() << "OnPressed Left";
-        }
-        if (event.key == Qt.RightArrow){
-            qDebug() << "OnPressed Right";
-        }
-    }
-    Keys.onReleased: {
-        if (event.key == Qt.UpArrow) {
-            qDebug() << "OnReleased UP";
-        }
-        if (event.key == Qt.DownArrow){
-            qDebug() << "OnReleased Down";
-        }
-        if (event.key == Qt.LeftArrow) {
-            qDebug() << "OnReleased Left";
-        }
-        if (event.key == Qt.RightArrow){
-            qDebug() << "OnReleased Right";
-        }
-    }*/
 }
 

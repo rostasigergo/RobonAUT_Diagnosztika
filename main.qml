@@ -4,10 +4,6 @@ import QtQuick.Controls 1.4
 import QtQuick.Dialogs 1.2
 
 import "UIElements"
-//TODO: Button ColorAnimation
-//TODO: Adatok megjelenítése
-//TODO: Diagram, mit? választható?
-//Ötlet: kiválsztható típusok log-ban
 
 
 ApplicationWindow {
@@ -18,10 +14,7 @@ ApplicationWindow {
 
     //C++ oldali kommunikáció
     //Signals
-    signal upArrow
-    signal downArrow
-    signal leftArrow
-    signal rightArrow
+
 
 
     menuBar: MenuBar {
@@ -37,16 +30,23 @@ ApplicationWindow {
             MenuItem {
                 text: qsTr("Csatlakozás...")
                 onTriggered: {
-                    //Csatlakozás
+                    c.connect();
                 }
-                enabled: true
+                //enabled: !c.isConnected;
+            }
+            MenuItem {
+                text: qsTr("Kapcsolat ellenőrzése")
+                onTriggered: {
+                    rp.checkRobotOnline();
+                }
+                //enabled: c.isConnected;
             }
             MenuItem {
                 text: qsTr("Kapcsolat bontása")
                 onTriggered: {
-                    //SzétCsatlakozás
+                    c.disconnect();
                 }
-                enabled: false
+                //enabled: c.isConnected;
             }
             MenuItem {
                 text: qsTr("Kilépés")
@@ -186,13 +186,92 @@ ApplicationWindow {
 
         }
     }
+    property string selectedCOM: "COM1"
     Dialog {
         id: comchoosenDialog
         title: qsTr("COM kiválasztása")
         standardButtons: StandardButton.Ok | StandardButton.Cancel
-        height: 75
-        width: 250
-        //
+        height: 95
+        width: 135
+        Column {
+            anchors.fill: parent
+            spacing: 10
+            /*Text {
+                text: qsTr("COM: ")
+                font.pixelSize: 16
+            }*/
+            ComboBox {
+                anchors.left: parent.left
+                anchors.right: parent.right
+                model: ListModel {
+                    //id: ---
+                    ListElement { text: "COM1"; }
+                    ListElement { text: "COM2"; }
+                    ListElement { text: "COM3"; }
+                    ListElement { text: "COM4"; }
+                    ListElement { text: "COM5"; }
+                    ListElement { text: "COM6"; }
+                    ListElement { text: "COM7"; }
+                    ListElement { text: "COM8"; }
+                    ListElement { text: "COM9"; }
+                    ListElement { text: "COM10"; }
+                    ListElement { text: "COM11"; }
+                    ListElement { text: "COM12"; }
+                }
+                onCurrentIndexChanged: {
+                    selectedCOM = currentIndex + 1;
+                        switch(currentIndex){
+                        case 0:
+                            selectedCOM = "COM1";
+                            break;
+                        case 1:
+                            selectedCOM = "COM2";
+                            break;
+                        case 2:
+                            selectedCOM = "COM3";
+                            break;
+                        case 3:
+                            selectedCOM = "COM4";
+                            break;
+                        case 4:
+                            selectedCOM = "COM5";
+                            break;
+                        case 5:
+                            selectedCOM = "COM6";
+                            break;
+                        case 6:
+                            selectedCOM = "COM7";
+                            break;
+                        case 7:
+                            selectedCOM = "COM8";
+                            break;
+                        case 8:
+                            selectedCOM = "COM9";
+                            break;
+                        case 9:
+                            selectedCOM = "COM10";
+                            break;
+                        case 10:
+                            selectedCOM = "COM11";
+                            break;
+                        case 11:
+                            selectedCOM = "COM12";
+                            break;
+                        }
+
+
+                }
+            }
+
+        }
+        onButtonClicked: {
+            if (clickedButton == StandardButton.Ok){
+                c.setPortName(selectedCOM);
+            }
+            else{
+                //
+            }
+        }
     }
 }
 

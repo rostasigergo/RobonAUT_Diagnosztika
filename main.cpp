@@ -1,8 +1,9 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
-//#include <QDebug>
-//#include <QQmlContext>
-//#include <stvapplication.h>
+#include <QQmlContext>
+#include <QtQml>
+#include <QTimer>
+//
 
 int main(int argc, char *argv[])
 {
@@ -10,7 +11,6 @@ int main(int argc, char *argv[])
 
     QQmlApplicationEngine engine;
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
-    //StvApplication app(argc, argv);
 
 
     return app.exec();
