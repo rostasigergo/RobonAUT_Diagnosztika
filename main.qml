@@ -31,25 +31,22 @@ Window {
         }
 
         Text {
-            text: "Státusz: " + robot.statusName;
+            text: "Státusz: " + rp.history.historyList[rp.history.historyList.length - 1].statusName;
         }
         Text {
-            text: "Sebesség: " + robot.speed;
+            text: "Sebesség: " + rp.history.historyList[rp.history.historyList.length - 1].speed;
         }
         Text {
-            text: "Szervó: " + robot.servo;
+            text: "Szervó: " + rp.history.historyList[rp.history.historyList.length - 1].servo;
         }
         Text {
-            text: "Akku: " + robot.battery;
+            text: "Akku: " + rp.history.historyList[rp.history.historyList.length - 1].battery;
         }
         Text {
             text: "Kapcsolódva: " + (rp.isOnline ? "igen" : "nem");
         }
         Text {
-            text: "History sebesség: " + h.historyList[0].speed;
-        }
-        Text {
-            text: "History lista hossz: " + h.historyList.length;
+            text: "History lista hossz: " + rp.history.historyList.length;
         }
 
         anchors.fill: parent

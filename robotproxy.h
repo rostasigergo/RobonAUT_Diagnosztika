@@ -31,7 +31,7 @@ public:
     Q_PROPERTY(bool isOnline READ isOnline WRITE setIsOnline NOTIFY isOnlineChanged)
     bool isOnline() const { return _isOnline; }
 
-    Q_PROPERTY(RobotStateHistory* history READ history)
+    Q_PROPERTY(RobotStateHistory* history READ history NOTIFY historyChanged)
     RobotStateHistory* history() { return &_history; }
 
 
