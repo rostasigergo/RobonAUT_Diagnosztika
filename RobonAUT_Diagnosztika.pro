@@ -1,11 +1,14 @@
+<<<<<<< HEAD
 TEMPLATE = app
 
-QT += qml quick
-CONFIG += c++11
+QT += qml quick serialport
+CONFIG += c++14
 
 SOURCES += main.cpp \
-    StvApplication.cpp \
-    MainWindowsEventHandling.cpp
+    communication.cpp \
+    RobotState.cpp \
+    robotproxy.cpp \
+    robotstatehistory.cpp
 
 RESOURCES += qml.qrc
 
@@ -22,6 +25,7 @@ DISTFILES += \
     MainForm.ui.qml
 
 HEADERS += \
-    StvApplication.h \
-    MainWindowsEventHandling.h
-
+    communication.h \
+    RobotState.h \
+    robotproxy.h \
+    robotstatehistory.h
