@@ -216,14 +216,28 @@ Item {
                 ColumnLayout {
                     anchors.bottom: parent.bottom
                     anchors.bottomMargin: 1
-                    spacing: 50
+                    //spacing: 50
+                    RowLayout {
+                        Layout.fillWidth: true
+                        Repeater{
+                            id: sensor_row1
+                            model: 24
+                            Gauge {
+                                width: 24
+                                height: 65
+                                value: 57
+                                maximumValue: 255
+                            }
+                        }
+                    }
+
                     RowLayout {
                         Layout.fillWidth: true
                         Repeater {
                             model: 24
                             Rectangle {
                                 // id: sensor1
-                                width: 14
+                                width: 24
                                 height: 7
                                 color: "blue"
                                 border.color: "black"
@@ -231,6 +245,20 @@ Item {
                             }
                         }
                     }
+                    RowLayout {
+                        Layout.fillWidth: true
+                        Repeater{
+                            id: sensor_row2
+                            model: 24
+                            Gauge {
+                                width: 14
+                                height: 65
+                                value: 57
+                                maximumValue: 255
+                            }
+                        }
+                    }
+
                     RowLayout {
                         Layout.fillWidth: true
                         Repeater {
