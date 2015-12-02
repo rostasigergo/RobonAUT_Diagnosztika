@@ -12,14 +12,12 @@ int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
 
-    RobotState robot;
-    Communication c(QString("COM12"));
-    RobotProxy rp(robot, c);
     RobotStateHistory h;
+    Communication c(QString("COM12"));
+    RobotProxy rp(h, c);
 
     qmlRegisterType<RobotState>("com.RobotState", 1, 0, "RobotState");
     QQmlApplicationEngine engine;
-    engine.rootContext()->setContextProperty("robot", &robot);
     engine.rootContext()->setContextProperty("rp", &rp);
     engine.rootContext()->setContextProperty("c", &c);
     engine.rootContext()->setContextProperty("h", &h);

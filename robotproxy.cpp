@@ -1,7 +1,7 @@
 #include "robotproxy.h"
 
-RobotProxy::RobotProxy(RobotState& state, Communication& communication, QObject *parent)
-    : QObject(parent), _state(state), _communication(communication)
+RobotProxy::RobotProxy(RobotStateHistory &history, Communication& communication, QObject *parent)
+    : QObject(parent), _history(history), _communication(communication)
 {
     _isOnline = false;
     _timeoutTimer.setSingleShot(true);
@@ -23,7 +23,9 @@ void RobotProxy::processMsgFromRobot(QDataStream& msg)
 
     if(type == STATUS)
     {
-        msg >> _state;
+        auto p = std::make_unique<RobotState>();
+        msg >> *p;
+        this->_history.add(p);
     }
 
     if(type == HELLO_ACK)

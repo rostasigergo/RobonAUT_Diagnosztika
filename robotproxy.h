@@ -3,8 +3,9 @@
 
 #include <QObject>
 #include <QTimer>
+#include <memory>
 #include "communication.h"
-#include "RobotState.h"
+#include "robotstatehistory.h"
 
 class RobotProxy : public QObject
 {
@@ -22,7 +23,7 @@ public:
         Brake
     };
 
-    explicit RobotProxy(RobotState& state, Communication& communication, QObject *parent = 0);
+    explicit RobotProxy(RobotStateHistory& history, Communication& communication, QObject *parent = 0);
 
     Q_ENUM(Mode)
     Q_ENUM(Command)
@@ -30,9 +31,13 @@ public:
     Q_PROPERTY(bool isOnline READ isOnline WRITE setIsOnline NOTIFY isOnlineChanged)
     bool isOnline() const { return _isOnline; }
 
+    Q_PROPERTY(RobotStateHistory* history READ history)
+    RobotStateHistory* history() { return &_history; }
+
 
 signals:
     void isOnlineChanged();
+    void historyChanged();
 
 public slots:
     void refreshState();
@@ -45,7 +50,7 @@ public slots:
 
 private:
 
-    RobotState& _state;
+    RobotStateHistory& _history;
     Communication& _communication;
     bool _isOnline;
     QTimer _timeoutTimer;

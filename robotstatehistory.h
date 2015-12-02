@@ -20,6 +20,7 @@ public:
     static int historyListCount(QQmlListProperty<RobotState> *historyList);
 
     RobotState* at(int pos);
+    void add(std::unique_ptr<RobotState> &state);
 
 signals:
     void historyListChanged();
