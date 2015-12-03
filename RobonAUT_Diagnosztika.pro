@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 TEMPLATE = app
 
 QT += qml quick serialport
