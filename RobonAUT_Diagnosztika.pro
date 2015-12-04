@@ -20,8 +20,7 @@ include(deployment.pri)
 FORMS += \
     UIElements/LineSensor.ui \
 
-DISTFILES += \
-    MainForm.ui.qml
+DISTFILES +=
 
 HEADERS += \
     communication.h \
