@@ -1,4 +1,5 @@
 import QtQuick 2.3
+import QtQuick.Dialogs 1.2
 import QtQuick.Window 2.2
 import QtQuick.Layouts 1.2
 import QtQuick.Controls 1.4
@@ -9,8 +10,16 @@ Window {
     width: 300;
     height: 300;
 
+
+
     ColumnLayout {
         id: mainlayout
+
+
+        Connections {
+            target: c
+            onConnected: console.log("connected")
+        }
 
         Text {
             text: c.availablePorts[0];
@@ -56,4 +65,3 @@ Window {
         anchors.fill: parent
     }
 }
-
