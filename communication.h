@@ -19,14 +19,16 @@ public:
     Q_PROPERTY(bool isConnected READ isConnected WRITE setIsConnected NOTIFY isConnectedChanged)
     bool isConnected() const { return _isConnected; }
 
-    Q_PROPERTY(QList<QString> availablePorts READ availablePorts)
-    QList<QString> availablePorts();
+    Q_PROPERTY(QList<QString> availablePorts READ availablePorts NOTIFY availablePortsChanged)
+    QList<QString> availablePorts() { return _availablePorts; }
+
 
 signals:
     void msgReady(QDataStream& msg);
     void disconnected();
     void connected();
     void isConnectedChanged();
+    void availablePortsChanged();
 
 public slots:
     void processData();
@@ -36,6 +38,7 @@ public slots:
 
     void setPortName(QString& portName);
     void setPort(QSerialPortInfo& port);
+    void updateAvailablePorts();
 
 private:
 
@@ -44,6 +47,7 @@ private:
     std::unique_ptr<QDataStream> _recv_stream;
     quint32 _msg_len;
     bool _isConnected;
+    QList<QString> _availablePorts;
 
     void setIsConnected(bool isConnected) { _isConnected = isConnected; emit isConnectedChanged(); }
 };

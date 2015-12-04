@@ -89,9 +89,12 @@ void Communication::setPort(QSerialPortInfo &port)
     this->_ser.setPort(port);
 }
 
-QList<QString> Communication::availablePorts()
+void Communication::updateAvailablePorts()
 {
-    QList<QString> names;
+    QList<QString> &names = this->_availablePorts;
+
+    names.clear();
+
     QList<QSerialPortInfo> ports = QSerialPortInfo::availablePorts();
 
     for(auto it = ports.begin(); it != ports.end(); it++)
@@ -99,5 +102,6 @@ QList<QString> Communication::availablePorts()
         names.append(it->portName());
     }
 
-    return names;
+    emit availablePortsChanged();
+
 }
