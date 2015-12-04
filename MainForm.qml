@@ -3,10 +3,13 @@ import QtQuick.Layouts 1.1
 import QtQuick.Extras 1.4
 import QtQuick.Controls 1.4
 
+
 Item {
     anchors.fill: parent
 
     property alias eventLogModel: eventLogModel
+
+
 
     RowLayout {
         anchors.fill: parent
@@ -96,22 +99,26 @@ Item {
 
                             text: qsTr("Adatok frissítése")
                             onClicked: {
-                                log({ message: "Frissítés...", colorCode: "blue" });
-                                //rp.refreshState();
+                               // if(activated()) {timer.stop();
+                                log({ message: "Deactivated", colorCode: "blue" });
+                                timer.stop();
+                               // }
+                                if (rp.isOnline) rp.refreshState();
 
                             }
                             onActivated: {
                                 log({ message: "Automatikus frissítés...", colorCode: "red" });
                                 timer.start();
                             }
-                            // enabled: rp.isOnline;
+
+                             //enabled: rp.isOnline;
                         }
                         Timer {
                             id: timer
                             repeat: true
                             onTriggered: {
                                 log({ message: "Timer triggered...", colorCode: "red" });
-                                //rp.refreshState();
+                                if (rp.isOnline) rp.refreshState();
                             }
                         }
                     }
@@ -124,37 +131,37 @@ Item {
                     Layout.minimumWidth: 260
                     ColumnLayout {
                     Text{
-                        text: "Kapcsolódva: " //+ (rp.isOnline ? "igen" : "nem");
+                        text: "Kapcsolódva: " + (rp.isOnline ? "igen" : "nem");
                         Layout.fillWidth: true
                         height: 10
                     }
                     Text{
-                        text: "Státusz: "// + robot.statusName;
+                        text: "Státusz: " + robot.statusName;
                         Layout.fillWidth: true
                         height: 10
                     }
                     Text{
-                        text: "Akkumulátor feszültség: "// + robot.battery;
+                        text: "Akkumulátor feszültség: " + robot.battery;
                         Layout.fillWidth: true
                         height: 10
                     }
                     Text{
-                        text: "Sebesség: "//  + robot.speed;
+                        text: "Sebesség: "  + robot.speed;
                         Layout.fillWidth: true
                         height: 10
                     }
                     Text{
-                        text: "Szervo: "//  + robot.servo;
+                        text: "Szervo: "  + robot.servo;
                         Layout.fillWidth: true
                         height: 10
                     }
                     Text{
-                        text: "History sebesség: " //+ h.historyList[0].speed;
+                        text: "History sebesség: " + h.historyList[0].speed;
                         Layout.fillWidth: true
                         height: 10
                     }
                     Text{
-                        text: "History lista hossz: "// + h.historyList.length;
+                        text: "History lista hossz: " + h.historyList.length;
                         Layout.fillWidth: true
                         height: 10
                     }
@@ -227,7 +234,7 @@ Item {
                             Rectangle {
                                 anchors.bottom: parent.bottom
                                 width: 14
-                                height: 25
+                                height: h.historyList[h.historyList.length].back_line[index]*65/4096//index
                                 color: "lightsteelblue"
                                 Text {
                                     text: parent.height //*100/65 -> %
@@ -267,7 +274,7 @@ Item {
                             Rectangle {
                                 anchors.bottom: parent.bottom
                                 width: 14
-                                height: 44
+                                height: h.historyList[h.historyList.length].front_line[index]*65/4096//index
                                 color: "lightsteelblue"
                                 Text {
                                     text: parent.height //*100/65 -> %
@@ -298,6 +305,7 @@ Item {
                         }
                     }
                 }
+
             }
             property real velocity: 0
             property real direction: 0
@@ -320,8 +328,8 @@ Item {
                         CircularGauge {
                            id: speedgauge
                            scale: 1
-                           value: 0 * velo_scale
-                           //value: spedgauge.value = velo_scale * robot.speed
+                           //value: 0 * velo_scale
+                           value: spedgauge.value = velo_scale * robot.speed
                        }
                         ComboBox {
                          //currentIndex: 3
@@ -348,7 +356,7 @@ Item {
                                     speedgauge.maximumValue = 400*attetel;
                                     break;
                                 }
-                                speedgauge.value = slider1.value * velo_scale;//! frissítés váltáskor
+                                //speedgauge.value = slider1.value * velo_scale;//! frissítés váltáskor
                                 //spedgauge.value = velo_scale * robot.speed;
                             }
                          }
@@ -372,8 +380,8 @@ Item {
                             id: directiongauge
                             minimumValue: -30
                             maximumValue: 30
-                            value: 0
-                            //value: velo_scale * robot.servo
+                            //value: 0
+                            value: velo_scale * robot.servo
                             scale: 1
                         }
                     }
@@ -395,6 +403,7 @@ Item {
                         maximumValue: 400
                         onValueChanged: {
                             speedgauge.value = value*velo_scale;//
+                            //sensor_row1.itemAt(1).height = value
 
                         }
                     }

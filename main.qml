@@ -32,21 +32,21 @@ ApplicationWindow {
                 onTriggered: {
                     c.connect();
                 }
-                //enabled: !c.isConnected;
+                enabled: !c.isConnected;
             }
             MenuItem {
                 text: qsTr("Kapcsolat ellenőrzése")
                 onTriggered: {
                     rp.checkRobotOnline();
                 }
-                //enabled: c.isConnected;
+                enabled: c.isConnected;
             }
             MenuItem {
                 text: qsTr("Kapcsolat bontása")
                 onTriggered: {
                     c.disconnect();
                 }
-                //enabled: c.isConnected;
+                enabled: c.isConnected;
             }
             MenuItem {
                 text: qsTr("Kilépés")
@@ -80,6 +80,7 @@ ApplicationWindow {
     property real velo_scale: 1
     property real kerekatmero: 10
     property real attetel: 1
+
 
     MainForm {
         id: mainFormControl
@@ -186,7 +187,7 @@ ApplicationWindow {
 
         }
     }
-    property string selectedCOM: "COM1"
+    property int selectedCOM: 0
     Dialog {
         id: comchoosenDialog
         title: qsTr("COM kiválasztása")
@@ -203,7 +204,7 @@ ApplicationWindow {
             ComboBox {
                 anchors.left: parent.left
                 anchors.right: parent.right
-                model: ListModel {
+               /*model: ListModel {
                     //id: ---
                     ListElement { text: "COM1"; }
                     ListElement { text: "COM2"; }
@@ -217,9 +218,17 @@ ApplicationWindow {
                     ListElement { text: "COM10"; }
                     ListElement { text: "COM11"; }
                     ListElement { text: "COM12"; }
+                }*/
+                menu: ListModel {
+                    /*Repeater {
+                        model: availablePorts
+                        MenuItem { text: names}
+
+                    }*/
                 }
                 onCurrentIndexChanged: {
-                    selectedCOM = currentIndex + 1;
+                    selectedCOM = currentIndex
+                    /*selectedCOM = currentIndex + 1;
                         switch(currentIndex){
                         case 0:
                             selectedCOM = "COM1";
@@ -257,7 +266,7 @@ ApplicationWindow {
                         case 11:
                             selectedCOM = "COM12";
                             break;
-                        }
+                        }*/
 
 
                 }
@@ -266,7 +275,7 @@ ApplicationWindow {
         }
         onButtonClicked: {
             if (clickedButton == StandardButton.Ok){
-                c.setPortName(selectedCOM);
+                c.setPortName(availablePorts[selectedCOM]);
             }
             else{
                 //
