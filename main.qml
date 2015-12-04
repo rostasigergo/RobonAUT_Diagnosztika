@@ -12,6 +12,10 @@ Window {
     ColumnLayout {
         id: mainlayout
 
+        Text {
+            text: c.availablePorts[0];
+        }
+
         Button {
             text: "Soros port megnyitása"
             onClicked: c.connect();

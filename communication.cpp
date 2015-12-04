@@ -1,6 +1,6 @@
 #include "communication.h"
 
-Communication::Communication(const QString portName, QObject *parent) : QObject(parent), _portName(portName)
+Communication::Communication(QObject *parent) : QObject(parent)
 {
     _msg_len = 0;
     _isConnected = false;
@@ -8,7 +8,7 @@ Communication::Communication(const QString portName, QObject *parent) : QObject(
     _send_stream = std::make_unique<QDataStream>();
     _recv_stream = std::make_unique<QDataStream>();
 
-    _ser.setPortName(portName);
+    _ser.setPortName("COM12");
     _ser.setBaudRate(115200);
 
     QObject::connect(&_ser, SIGNAL(aboutToClose()), this, SLOT(processClose()));
@@ -80,5 +80,28 @@ void Communication::send(const char* msg)
 void Communication::setPortName(QString& portName)
 {
     this->disconnect();
-    _portName = portName;
+    this->_ser.setPortName(portName);
+}
+
+void Communication::setPort(QSerialPortInfo &port)
+{
+    this->disconnect();
+    this->_ser.setPort(port);
+}
+
+void Communication::updateAvailablePorts()
+{
+    QList<QString> &names = this->_availablePorts;
+
+    names.clear();
+
+    QList<QSerialPortInfo> ports = QSerialPortInfo::availablePorts();
+
+    for(auto it = ports.begin(); it != ports.end(); it++)
+    {
+        names.append(it->portName());
+    }
+
+    emit availablePortsChanged();
+
 }

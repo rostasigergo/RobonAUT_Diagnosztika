@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
 
     RobotStateHistory h;
-    Communication c(QString("COM12"));
+    Communication c;
     RobotProxy rp(h, c);
 
     qmlRegisterType<RobotState>("com.RobotState", 1, 0, "RobotState");
@@ -25,6 +25,7 @@ int main(int argc, char *argv[])
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
 
     QTimer::singleShot(3000, h.at(0), SLOT(incrementSpeed()));
+    QTimer::singleShot(3000, &c, SLOT(updateAvailablePorts()));
 
     return app.exec();
 }
