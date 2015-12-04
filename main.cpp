@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
 
     RobotStateHistory h;
-    Communication c(QString("COM12"));
+    Communication c;
     RobotProxy rp(h, c);
 
     qmlRegisterType<RobotState>("com.RobotState", 1, 0, "RobotState");
