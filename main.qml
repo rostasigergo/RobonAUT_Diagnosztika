@@ -14,7 +14,7 @@ ApplicationWindow {
 
     //C++ oldali kommunikáció
     //Signals
-
+    property int lastindex: h.historyList.length - 1
 
 
     menuBar: MenuBar {

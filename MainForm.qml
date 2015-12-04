@@ -136,22 +136,22 @@ Item {
                         height: 10
                     }
                     Text{
-                        text: "Státusz: " + h.historyList[h.historyList.length].statusName;
+                        text: "Státusz: " + h.historyList[lastindex].statusName;
                         Layout.fillWidth: true
                         height: 10
                     }
                     Text{
-                        text: "Akkumulátor feszültség: " + h.historyList[h.historyList.length].battery;
+                        text: "Akkumulátor feszültség: " + h.historyList[lastindex].battery;
                         Layout.fillWidth: true
                         height: 10
                     }
                     Text{
-                        text: "Sebesség: "  + h.historyList[h.historyList.length].speed;
+                        text: "Sebesség: "  + h.historyList[lastindex].speed;
                         Layout.fillWidth: true
                         height: 10
                     }
                     Text{
-                        text: "Szervo: "  + h.historyList[h.historyList.length].servo;
+                        text: "Szervo: "  + h.historyList[lastindex].servo;
                         Layout.fillWidth: true
                         height: 10
                     }
@@ -234,7 +234,7 @@ Item {
                             Rectangle {
                                 anchors.bottom: parent.bottom
                                 width: 14
-                                height: h.historyList[h.historyList.length].back_line[index]*65/4096//index
+                                height: h.historyList[lastindex].back_line[index]*65/4096//index
                                 color: "lightsteelblue"
                                 Text {
                                     text: parent.height //*100/65 -> %
@@ -274,7 +274,7 @@ Item {
                             Rectangle {
                                 anchors.bottom: parent.bottom
                                 width: 14
-                                height: h.historyList[h.historyList.length].front_line[index]*65/4096//index
+                                height: h.historyList[lastindex].front_line[index]*65/4096//index
                                 color: "lightsteelblue"
                                 Text {
                                     text: parent.height //*100/65 -> %
@@ -329,7 +329,7 @@ Item {
                            id: speedgauge
                            scale: 1
                            //value: 0 * velo_scale
-                           value: velo_scale * h.historyList[h.historyList.length].speed
+                           value: velo_scale * h.historyList[lastindex].speed
                        }
                         ComboBox {
                          //currentIndex: 3
@@ -357,7 +357,7 @@ Item {
                                     break;
                                 }
                                 //speedgauge.value = slider1.value * velo_scale;//! frissítés váltáskor
-                                //spedgauge.value = velo_scale * h.historyList[h.historyList.length].speed;
+                                //spedgauge.value = velo_scale * h.historyList[lastindex].speed;
                             }
                          }
                     }
@@ -381,7 +381,7 @@ Item {
                             minimumValue: -30
                             maximumValue: 30
                             //value: 0
-                            value: velo_scale * h.historyList[h.historyList.length].servo
+                            value: velo_scale * h.historyList[lastindex].servo
                             scale: 1
                         }
                     }
