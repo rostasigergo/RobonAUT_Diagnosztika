@@ -136,22 +136,22 @@ Item {
                         height: 10
                     }
                     Text{
-                        text: "Státusz: " + robot.statusName;
+                        text: "Státusz: " + h.historyList[h.historyList.length].statusName;
                         Layout.fillWidth: true
                         height: 10
                     }
                     Text{
-                        text: "Akkumulátor feszültség: " + robot.battery;
+                        text: "Akkumulátor feszültség: " + h.historyList[h.historyList.length].battery;
                         Layout.fillWidth: true
                         height: 10
                     }
                     Text{
-                        text: "Sebesség: "  + robot.speed;
+                        text: "Sebesség: "  + h.historyList[h.historyList.length].speed;
                         Layout.fillWidth: true
                         height: 10
                     }
                     Text{
-                        text: "Szervo: "  + robot.servo;
+                        text: "Szervo: "  + h.historyList[h.historyList.length].servo;
                         Layout.fillWidth: true
                         height: 10
                     }
@@ -329,7 +329,7 @@ Item {
                            id: speedgauge
                            scale: 1
                            //value: 0 * velo_scale
-                           value: spedgauge.value = velo_scale * robot.speed
+                           value: velo_scale * h.historyList[h.historyList.length].speed
                        }
                         ComboBox {
                          //currentIndex: 3
@@ -357,7 +357,7 @@ Item {
                                     break;
                                 }
                                 //speedgauge.value = slider1.value * velo_scale;//! frissítés váltáskor
-                                //spedgauge.value = velo_scale * robot.speed;
+                                //spedgauge.value = velo_scale * h.historyList[h.historyList.length].speed;
                             }
                          }
                     }
@@ -381,7 +381,7 @@ Item {
                             minimumValue: -30
                             maximumValue: 30
                             //value: 0
-                            value: velo_scale * robot.servo
+                            value: velo_scale * h.historyList[h.historyList.length].servo
                             scale: 1
                         }
                     }
