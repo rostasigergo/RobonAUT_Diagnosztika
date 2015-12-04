@@ -19,8 +19,8 @@ public:
     Q_PROPERTY(bool isConnected READ isConnected WRITE setIsConnected NOTIFY isConnectedChanged)
     bool isConnected() const { return _isConnected; }
 
-    Q_PROPERTY(QList<QSerialPortInfo> availablePorts READ availablePorts)
-    QList<QSerialPortInfo> availablePorts() { return QSerialPortInfo::availablePorts(); }
+    Q_PROPERTY(QList<QString> availablePorts READ availablePorts)
+    QList<QString> availablePorts();
 
 signals:
     void msgReady(QDataStream& msg);

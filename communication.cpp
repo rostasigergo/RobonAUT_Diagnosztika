@@ -88,3 +88,16 @@ void Communication::setPort(QSerialPortInfo &port)
     this->disconnect();
     this->_ser.setPort(port);
 }
+
+QList<QString> Communication::availablePorts()
+{
+    QList<QString> names;
+    QList<QSerialPortInfo> ports = QSerialPortInfo::availablePorts();
+
+    for(auto it = ports.begin(); it != ports.end(); it++)
+    {
+        names.append(it->portName());
+    }
+
+    return names;
+}
