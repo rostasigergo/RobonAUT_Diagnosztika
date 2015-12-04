@@ -130,6 +130,7 @@ ApplicationWindow {
         onButtonClicked: {
             if (clickedButton == StandardButton.Ok){
                 kerekatmero = wheeldiameterinput.text
+                mainFormControl.log({ message: "Kerék átmérő állítva " + kerekatmero + " cm-re!", colorCode: "red" });
                 //velo_scale nem frissül!!!!
             }
             else{
@@ -179,6 +180,7 @@ ApplicationWindow {
         onButtonClicked: {
             if (clickedButton == StandardButton.Ok){
                 attetel = attetelinput.text
+                mainFormControl.log({ message: "Áttétel állítva, új értéke: " + kerekatmero, colorCode: "red" });
                 //velo_scale nem frissül!!!!
             }
             else{

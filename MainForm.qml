@@ -41,6 +41,7 @@ Item {
                             onClicked: {
                                 log({ message: "Start...", colorCode: "green" });
                             }
+                            enabled: false
 
                         }
                         Button {
@@ -50,6 +51,7 @@ Item {
                             onClicked: {
                                 log({ message: "Stop...", colorCode: "red" });
                             }
+                            enabled: false
                         }
                         Text {
                             Layout.fillWidth: true
