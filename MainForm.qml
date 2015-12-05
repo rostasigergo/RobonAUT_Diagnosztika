@@ -100,19 +100,22 @@ Item {
                             Layout.fillWidth: true
 
                             text: qsTr("Adatok frissítése")
-                            onClicked: {
-                               // if(activated()) {timer.stop();
-                                log({ message: "Deactivated", colorCode: "blue" });
-                                timer.stop();
-                               // }
-                                if (rp.isOnline) rp.refreshState();
-
-                            }
                             onActivated: {
                                 log({ message: "Automatikus frissítés...", colorCode: "red" });
                                 timer.start();
                             }
-
+                            onPressedChanged: {
+                                if (pressed) {
+                                    log({ message: "Automatikus frissítés leállítva...", colorCode: "blue" });
+                                    timer.stop();
+                                }
+                            }
+                            onEnabledChanged: {
+                                if (!enabled) {
+                                    timer.stop();
+                                    progress = 0;//tesztelni kell
+                                }
+                            }
                              //enabled: rp.isOnline;
                         }
                         Timer {
