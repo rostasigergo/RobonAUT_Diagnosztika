@@ -14,7 +14,14 @@ ApplicationWindow {
 
     //C++ oldali kommunikáció
     //Signals
+
+    Connections {
+        target: h
+        onHistoryListChanged: mainFormControl.log({ message: lastindex + ": " + "Sebesség: " + h.historyList[lastindex].speed + " Irány: " + h.historyList[lastindex].servo +" Akkumulátor feszültség: " +h.historyList[lastindex].battery, colorCode: "yellow" });
+        }
+
     property int lastindex: h.historyList.length - 1
+
 
 
     menuBar: MenuBar {
@@ -95,6 +102,7 @@ ApplicationWindow {
         standardButtons: StandardButton.Ok | StandardButton.Cancel
         height: 75
         width: 250
+
 
         Column {
             anchors.fill: parent
@@ -278,6 +286,7 @@ ApplicationWindow {
         onButtonClicked: {
             if (clickedButton == StandardButton.Ok){
                 c.setPortName(availablePorts[selectedCOM]);
+                //mainFormControl.log({ message: lastindex + ": " + "Sebesség: " + h.historyList[lastindex].speed + " Irány: " + h.historyList[lastindex].servo +" Akkumulátor feszültség: " +h.historyList[lastindex].battery, colorCode: "yellow" });
             }
             else{
                 //
