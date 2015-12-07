@@ -20,7 +20,7 @@ ApplicationWindow {
         onHistoryListChanged: mainFormControl.log({ message: (h.historyList.length - 1) + ": Státusz: " + h.historyList[h.historyList.length - 1].statusName + ";   Sebesség: " + h.historyList[h.historyList.length - 1].speed.toFixed(2) + ";   Irány: " + h.historyList[h.historyList.length - 1].servo.toFixed(2) +";   Akkumulátor feszültség: " +h.historyList[h.historyList.length - 1].battery.toFixed(2) + " [V];", colorCode: "yellow",logIndex: (h.historyList.length - 1) });
         }
 
-    property int lastindex: 0//h.historyList.length - 1
+    property int lastindex: (mainFormControl.onlineadatok.checked ? h.historyList.length - 1 : 0)//if(mainFormControl.onlineadatok.checked) h.historyList.length - 1
 
 
 

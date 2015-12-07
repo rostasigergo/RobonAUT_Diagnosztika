@@ -8,7 +8,7 @@ Item {
     anchors.fill: parent
 
     property alias eventLogModel: eventLogModel
-
+    property alias onlineadatok: onLineAdatok
 
 
     RowLayout {
@@ -132,9 +132,6 @@ Item {
                             onCheckedChanged: {
                                 if (checked) {
                                     lastindex = h.historyList.length - 1
-                                }
-                                else{
-                                    //lastindex = 4//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                                 }
                             }
                         }
