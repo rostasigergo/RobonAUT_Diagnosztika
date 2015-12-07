@@ -3,5 +3,6 @@
         <file>main.qml</file>
         <file>MainForm.qml</file>
         <file>UIElements/LineSensor.ui.qml</file>
+        <file>UIElements/ToolTip.qml</file>
     </qresource>
 </RCC>

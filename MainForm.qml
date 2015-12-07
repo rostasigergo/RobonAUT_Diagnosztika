@@ -3,6 +3,7 @@ import QtQuick.Layouts 1.1
 import QtQuick.Extras 1.4
 import QtQuick.Controls 1.4
 
+import "UIElements"
 
 Item {
     anchors.fill: parent
@@ -275,15 +276,22 @@ Item {
                         Layout.fillWidth: true
                         height: 7
                         Repeater {
+                            id: reptarg
                             model: 24
                             Rectangle {
-                                // id: sensor1
+                                id: sensor_teglalapok1
                                 anchors.bottom: parent.bottom
                                 anchors.top: parent.top
                                 width: 14
-                                color: "blue"
+                                color: "blue"//Color.rgb...
                                 border.color: "black"
                                 border.width: 1
+                                ToolTip{
+                                     id: tooltip1
+                                     width: 70
+                                     target: sensor_teglalapok1//sensor_row1.itemAt(index)
+                                     text: h.historyList[lastindex].back_line[index] + "/4096" //(h.historyList[lastindex].back_line[index]*100/4096).toFixed(0) + "%"
+                                }
                             }
                         }
                     }
@@ -319,12 +327,19 @@ Item {
                         Repeater {
                             model: 24
                             Rectangle {
+                                id: sensor_teglalapok2
                                 anchors.top: parent.top
                                 anchors.bottom: parent.bottom
                                 width: 14
                                 color: "blue"
                                 border.color: "black"
                                 border.width: 1
+                                ToolTip{
+                                     id: tooltip2
+                                     width: 70
+                                     target: sensor_teglalapok2
+                                     text: h.historyList[lastindex].front_line[index] + "/4096" //(h.historyList[lastindex].back_line[index]*100/4096).toFixed(0) + "%"
+                                }
                             }
                         }
                     }

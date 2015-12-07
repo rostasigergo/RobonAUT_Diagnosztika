@@ -3,8 +3,6 @@ import QtQuick.Window 2.2
 import QtQuick.Controls 1.4
 import QtQuick.Dialogs 1.2
 
-import "UIElements"
-
 
 ApplicationWindow {
     title: qsTr("RobonAUT Diagnosztika")
@@ -22,7 +20,9 @@ ApplicationWindow {
 
     property int lastindex: (mainFormControl.onlineadatok.checked ? h.historyList.length - 1 : 0)//if(mainFormControl.onlineadatok.checked) h.historyList.length - 1
 
-
+    function logfromCpp(msg){
+        mainFormControl.log({message: msg, colorCode: "red",logIndex: -1 })
+    }
 
     menuBar: MenuBar {
         Menu {
