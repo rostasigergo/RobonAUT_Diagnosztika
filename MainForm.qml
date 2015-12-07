@@ -403,7 +403,7 @@ Item {
                             id: directiongauge
                             minimumValue: -30
                             maximumValue: 30
-                            value: velo_scale * h.historyList[lastindex].servo
+                            value: h.historyList[lastindex].servo
                             scale: 1
                         }
                     }

@@ -31,6 +31,7 @@ ApplicationWindow {
                 text: qsTr("COM kiválasztása")
                 enabled: true
                 onTriggered: {
+                    //c.updatePortsAvailable();
                     comchoosenDialog.open();
                 }
             }
@@ -197,7 +198,7 @@ ApplicationWindow {
 
         }
     }
-    property string selectedCOM: ""
+    property int selectedCOM: 0
     Dialog {
         id: comchoosenDialog
         title: qsTr("COM kiválasztása")
@@ -214,29 +215,11 @@ ApplicationWindow {
             ComboBox {
                 anchors.left: parent.left
                 anchors.right: parent.right
-               /*model: ListModel {
-                    //id: ---
-                    ListElement { text: "COM1"; }
-                    ListElement { text: "COM2"; }
-                    ListElement { text: "COM3"; }
-                    ListElement { text: "COM4"; }
-                    ListElement { text: "COM5"; }
-                    ListElement { text: "COM6"; }
-                    ListElement { text: "COM7"; }
-                    ListElement { text: "COM8"; }
-                    ListElement { text: "COM9"; }
-                    ListElement { text: "COM10"; }
-                    ListElement { text: "COM11"; }
-                    ListElement { text: "COM12"; }
-                }*/
-                model: c.availablePorts
-                    /*Repeater {
-                        model: availablePorts
-                        MenuItem { text: names}
 
-                    }*/
+                model: c.availablePorts
+
                 onCurrentIndexChanged: {
-                    selectedCOM = c.availablePorts[currentIndex]
+                    selectedCOM = currentIndex;
                     console.log("this");
                 }
             }
@@ -244,9 +227,9 @@ ApplicationWindow {
         }
         onButtonClicked: {
             if (clickedButton == StandardButton.Ok){
-                c.setPortName(selectedCOM);
+                c.setPortName(c.availablePorts[selectedCOM]);
                 console.log("that");
-                //mainFormControl.log({ message: lastindex + ": " + "Sebesség: " + h.historyList[lastindex].speed + " Irány: " + h.historyList[lastindex].servo +" Akkumulátor feszültség: " +h.historyList[lastindex].battery, colorCode: "yellow", logIndex: -1 });
+
             }
             else{
                 //
