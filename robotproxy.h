@@ -29,6 +29,10 @@ public:
     Q_ENUM(Command)
 
     Q_PROPERTY(bool isOnline READ isOnline WRITE setIsOnline NOTIFY isOnlineChanged)
+
+    /**
+     * @brief isOnline ha a robot a megfelelő (ACK) üzenettel reagál a (HELLO) parancsra a robot online van.
+     */
     bool isOnline() const { return _isOnline; }
 
     Q_PROPERTY(RobotStateHistory* history READ history NOTIFY historyChanged)
@@ -36,6 +40,7 @@ public:
 
 
 signals:
+
     void isOnlineChanged();
     void historyChanged();
 
