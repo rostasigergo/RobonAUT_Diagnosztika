@@ -37,6 +37,8 @@ RobotState* RobotStateHistory::at(int pos)
     return _history.at(pos).get();
 }
 
+
+
 void RobotStateHistory::add(std::unique_ptr<RobotState> &state)
 {
     this->_history.push_back(std::move(state));

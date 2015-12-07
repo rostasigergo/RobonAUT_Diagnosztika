@@ -6,33 +6,51 @@
 
  A Diagnosztikai rendszer négy központi elemből áll:
 
-        Kommunikációs osztály:
-        Ez felelős a program és a fogadó oldal közötti kommunikációért, soros portra lett megvalósítva.
+ * **Communication**
+ Ez felelős a program és a fogadó oldal közötti **kommunikációért**, soros portra lett megvalósítva.
 
-        Robotstate osztály:
-        Ez az osztály tárolja a robot változóit, ebben van reprezentálva az összes szenzoradat.
+ * **RobotState**
+ Ez az osztály tárolja a robot **változóit**, ebben van reprezentálva az összes szenzoradat.
 
-        Robotproxy osztály:
-        Ez az osztály végzi a robot progam felé történő interfacelését, ez az osztály tartja kapcsolatban a kommunikációt
-        az adatok tárolásával és ezen kereszül történik a parancsok kiadása is.
+ * **RobotProxy**
+ Ez az osztály végzi a robot progam felé történő interfacelését, ez az osztály tartja kapcsolatban a kommunikációt
+ az adatok tárolásával és ezen kereszül történik a **parancsok kiadása** is.
 
-        Robotstatehistory osztály:
-        A robot által visszaküldött állapotok tárolására szolgál , itt lehet visszakeresni a korábbi szenzorképeket is,
-        illetve ennek a tartalmát jeleníti meg a felhasználói felület. (visszakereshető jeleggel)
+ * **RobotStateHistory**
+ A robot által **visszaküldött állapotok tárolására** szolgál , itt lehet visszakeresni a korábbi szenzorképeket is,
+ illetve ennek a tartalmát jeleníti meg a felhasználói felület. (visszakereshető jeleggel)
 
- @section Kommunikáció
+  @section HMI HMI: Megjelelnítő felület
+
+ Ezen felül van a programnak egy QML-ben készült felhasználói felülete is.
+ A main() függvényben történik a fent említett osztályok példányosítása (kommunikáció, robotproxy, robotstatehistory),
+    ezek signal - slot mechanizmuson kereszül kapcsolódnak a QML felülethez ahol aza datok megjelenítése történik.
+
+
+     @section Kommunikáció
         A program a robottal egyszerű szöveges parancsok segítségével kommunikál, amelyekre a robot válaszol.
 
         | Parancs       | Válasz        |
-        | ------------- |:-------------:|
+        | ------------- |---------------|
         | HELLO         | ACK           |
         | DATAREQ       | szenzoradatok |
-        | zebra stripes | are neat      |
+        | COMMAND xy    | xy ACK        |
 
-        Ezen kommunikációt a Robotproxy osztály végzi.
+A kommunikáció menete a következő:
 
+
+
+**sequence**
+Alice->Bob: Hello Bob, how are you?
+Note right of Bob: Bob thinks
+Bob-->Alice: I am good thanks!
+
+
+
+Ezen kommunikációt a Robotproxy osztály irányítja
+
+ @section Robotproxy Robotproxy:
 
  @section Robot Robot:
   A robot központi vezérlpje egy STM32F4 panelen található, ezen fut egy FreeRTOS operációs rendszer
 
- @section HMI HMI: Megjelelnítő felület
