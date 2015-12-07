@@ -228,6 +228,7 @@ ApplicationWindow {
         onButtonClicked: {
             if (clickedButton == StandardButton.Ok){
                 c.setPortName(c.availablePorts[selectedCOM]);
+                mainFormControl.log({ message: "Soros port átállítva " + c.availablePorts[selectedCOM] + " -ra", colorCode: "red", logIndex: -1 });
                 //console.log("that");
             }
         }

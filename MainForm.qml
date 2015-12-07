@@ -203,11 +203,9 @@ Item {
                                     MouseArea {
                                         anchors.fill: parent
                                         onClicked: if (!onLineAdatok.checked){
-                                                       eventLogger.currentIndex = index
-                                                       //console.debug(eventLogModel.get(index).logIndex +":)")
                                                        if (eventLogModel.get(index).logIndex > -1){
                                                             lastindex = eventLogModel.get(index).logIndex;
-                                                            //console.debug(eventLogModel.get(index).logIndex);
+                                                            eventLogger.currentIndex = index;
                                                        }
                                                    }
                                         }
