@@ -36,7 +36,7 @@ public slots:
     void disconnect();
     void processClose();
 
-    void setPortName(QString& portName);
+    void setPortName(QString portName);
     void setPort(QSerialPortInfo& port);
     void updateAvailablePorts();
 

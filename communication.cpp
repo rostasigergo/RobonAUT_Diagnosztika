@@ -77,7 +77,7 @@ void Communication::send(const char* msg)
     stream.writeRawData(msg, strlen(msg));
 }
 
-void Communication::setPortName(QString& portName)
+void Communication::setPortName(QString portName)
 {
     this->disconnect();
     this->_ser.setPortName(portName);

@@ -197,7 +197,7 @@ ApplicationWindow {
 
         }
     }
-    property int selectedCOM: 0
+    property string selectedCOM: ""
     Dialog {
         id: comchoosenDialog
         title: qsTr("COM kiválasztása")
@@ -236,55 +236,16 @@ ApplicationWindow {
 
                     }*/
                 onCurrentIndexChanged: {
-                    selectedCOM = currentIndex
-                    /*selectedCOM = currentIndex + 1;
-                        switch(currentIndex){
-                        case 0:
-                            selectedCOM = "COM1";
-                            break;
-                        case 1:
-                            selectedCOM = "COM2";
-                            break;
-                        case 2:
-                            selectedCOM = "COM3";
-                            break;
-                        case 3:
-                            selectedCOM = "COM4";
-                            break;
-                        case 4:
-                            selectedCOM = "COM5";
-                            break;
-                        case 5:
-                            selectedCOM = "COM6";
-                            break;
-                        case 6:
-                            selectedCOM = "COM7";
-                            break;
-                        case 7:
-                            selectedCOM = "COM8";
-                            break;
-                        case 8:
-                            selectedCOM = "COM9";
-                            break;
-                        case 9:
-                            selectedCOM = "COM10";
-                            break;
-                        case 10:
-                            selectedCOM = "COM11";
-                            break;
-                        case 11:
-                            selectedCOM = "COM12";
-                            break;
-                        }*/
-
-
+                    selectedCOM = c.availablePorts[currentIndex]
+                    console.log("this");
                 }
             }
 
         }
         onButtonClicked: {
             if (clickedButton == StandardButton.Ok){
-                c.setPortName(availablePorts[selectedCOM]);
+                c.setPortName(selectedCOM);
+                console.log("that");
                 //mainFormControl.log({ message: lastindex + ": " + "Sebesség: " + h.historyList[lastindex].speed + " Irány: " + h.historyList[lastindex].servo +" Akkumulátor feszültség: " +h.historyList[lastindex].battery, colorCode: "yellow", logIndex: -1 });
             }
             else{
