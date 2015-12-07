@@ -31,7 +31,7 @@ ApplicationWindow {
                 text: qsTr("COM kiválasztása")
                 enabled: true
                 onTriggered: {
-                    //c.updatePortsAvailable();
+                    c.updateAvailablePorts();
                     comchoosenDialog.open();
                 }
             }
@@ -220,7 +220,7 @@ ApplicationWindow {
 
                 onCurrentIndexChanged: {
                     selectedCOM = currentIndex;
-                    console.log("this");
+                    //console.log("this");
                 }
             }
 
@@ -228,11 +228,7 @@ ApplicationWindow {
         onButtonClicked: {
             if (clickedButton == StandardButton.Ok){
                 c.setPortName(c.availablePorts[selectedCOM]);
-                console.log("that");
-
-            }
-            else{
-                //
+                //console.log("that");
             }
         }
     }
