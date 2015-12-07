@@ -24,8 +24,13 @@
 
  Ezen felül van a programnak egy QML-ben készült felhasználói felülete is.
  A main() függvényben történik a fent említett osztályok példányosítása (kommunikáció, robotproxy, robotstatehistory),
-    ezek signal - slot mechanizmuson kereszül kapcsolódnak a QML felülethez ahol aza datok megjelenítése történik.
+    ezek signal - slot mechanizmuson kereszül kapcsolódnak a QML felülethez ahol az adatok megjelenítése történik.
 
+![](HMI.jpg)
+
+  * A képen a HMI látható, jobb oldalt az autó sebessége és az első tengely irányvektora,
+  felette az első és hátsó vonalszenzorsor adatai, jobb oldalt a csatlakozáshoz és parancskiadáshoz való beavatkozók
+  középen pedi az event log látható.
 
      @section Kommunikáció
         A program a robottal egyszerű szöveges parancsok segítségével kommunikál, amelyekre a robot válaszol.
