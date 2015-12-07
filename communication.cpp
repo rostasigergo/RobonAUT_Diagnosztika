@@ -8,7 +8,7 @@ Communication::Communication(QObject *parent) : QObject(parent)
     _send_stream = std::make_unique<QDataStream>();
     _recv_stream = std::make_unique<QDataStream>();
 
-    _ser.setPortName("COM12");
+    _ser.setPortName("COM4");
     _ser.setBaudRate(115200);
 
     QObject::connect(&_ser, SIGNAL(aboutToClose()), this, SLOT(processClose()));

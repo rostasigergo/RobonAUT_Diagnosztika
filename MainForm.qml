@@ -39,7 +39,7 @@ Item {
                                 duration: 200
                             }
                             onClicked: {
-                                log({ message: "Start...", colorCode: "green" });
+                                log({ message: "Start...", colorCode: "green", logIndex: -1 });
                             }
                             enabled: false
 
@@ -49,7 +49,7 @@ Item {
                             Layout.fillWidth: true
                             text: qsTr("Stop")
                             onClicked: {
-                                log({ message: "Stop...", colorCode: "red" });
+                                log({ message: "Stop...", colorCode: "red", logIndex: -1 });
                             }
                             enabled: false
                         }
@@ -92,7 +92,7 @@ Item {
                             Layout.fillWidth: true
                             text: qsTr("Beállít")
                             onClicked: {
-                                log({ message: "Beállítás...", colorCode: "yellow" });
+                                log({ message: "Beállítás...", colorCode: "yellow", logIndex: -1 });
                             }
                         }*/
                         DelayButton {
@@ -101,29 +101,41 @@ Item {
 
                             text: qsTr("Adatok frissítése")
                             onActivated: {
-                                log({ message: "Automatikus frissítés...", colorCode: "red" });
+                                log({ message: "Automatikus frissítés...", colorCode: "red",logIndex: -1 });
                                 timer.start();
                             }
                             onPressedChanged: {
                                 if (pressed) {
-                                    log({ message: "Automatikus frissítés leállítva...", colorCode: "blue" });
+                                    log({ message: "Automatikus frissítés leállítva...", colorCode: "blue", logIndex: -1 });
                                     timer.stop();
                                 }
                             }
                             onEnabledChanged: {
                                 if (!enabled) {
                                     timer.stop();
-                                    progress = 0;//tesztelni kell
                                 }
                             }
-                             //enabled: rp.isOnline;
+                            enabled: rp.isOnline;
                         }
                         Timer {
                             id: timer
                             repeat: true
                             onTriggered: {
-                                log({ message: "Timer triggered...", colorCode: "red" });
                                 if (rp.isOnline) rp.refreshState();
+                            }
+                        }
+                        CheckBox {
+                            id: onLineAdatok
+                            Layout.fillWidth: true
+                            text: qsTr("Online adatok")
+                            checked: true
+                            onCheckedChanged: {
+                                if (checked) {
+                                    lastindex = h.historyList.length - 1
+                                }
+                                else{
+                                    //lastindex = 4//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                                }
                             }
                         }
                     }
@@ -161,11 +173,6 @@ Item {
                         height: 10
                     }
                     Text{
-                        text: "History sebesség: " + h.historyList[0].speed;
-                        Layout.fillWidth: true
-                        height: 10
-                    }
-                    Text{
                         text: "History lista hossz: " + h.historyList.length;
                         Layout.fillWidth: true
                         height: 10
@@ -186,7 +193,7 @@ Item {
                     ListView {
                         id: eventLogger
                         anchors.fill: parent
-                        //highlight: Rectangle { color: "blue"; radius: 5 }
+                        highlight: Rectangle { color: "steelblue"; radius: 5 }
                         delegate: GroupBox {
                             anchors.left: parent.left
                             anchors.right: parent.right
@@ -196,24 +203,37 @@ Item {
                                     width: 40
                                     height: 20
                                     color: colorCode
+                                    MouseArea {
+                                        anchors.fill: parent
+                                        onClicked: if (!onLineAdatok.checked){
+                                                       eventLogger.currentIndex = index
+                                                       //console.debug(eventLogModel.get(index).logIndex +":)")
+                                                       if (eventLogModel.get(index).logIndex > -1){
+                                                            lastindex = eventLogModel.get(index).logIndex;
+                                                            //console.debug(eventLogModel.get(index).logIndex);
+                                                       }
+                                                   }
+                                        }
                                 }
-                            Text {
-                                text: message
-                                anchors.verticalCenter: parent.verticalCenter
-                                font.bold: true
+                                Text {
+                                    text: message
+                                    anchors.verticalCenter: parent.verticalCenter
+                                    font.bold: true
                                 }
-                            spacing: 10
+                                spacing: 10
                                 }
-                        }
+                            property int logIndex: 0
+                          }
                         model: ListModel {
                             id: eventLogModel
                             ListElement {
                                 message: "Program indítás..."
                                 colorCode: "green"
+                                logIndex: -1
                                         }
                                 }
                         onCountChanged: {
-                            eventLogger.currentIndex = eventLogger.count -1;
+                            if (onLineAdatok.checked) eventLogger.currentIndex = eventLogger.count -1;
                             }
                         }
                     }
@@ -242,8 +262,9 @@ Item {
                                 height: h.historyList[lastindex].back_line[index]*65/4096//index
                                 color: "lightsteelblue"
                                 Text {
-                                    text: parent.height //*100/65 -> %
+                                    text: (parent.height*100/65).toFixed(0) //+ "%"
                                     font.pointSize: 7
+                                    font.bold: true
                                     color: "black"
                                     anchors.bottom: parent.bottom
                                     anchors.horizontalCenter: parent.horizontalCenter
@@ -282,8 +303,9 @@ Item {
                                 height: h.historyList[lastindex].front_line[index]*65/4096//index
                                 color: "lightsteelblue"
                                 Text {
-                                    text: parent.height //*100/65 -> %
+                                    text: (parent.height*100/65).toFixed(0) //+ "%"
                                     font.pointSize: 7
+                                    font.bold: true
                                     color: "black"
                                     anchors.bottom: parent.bottom
                                     anchors.horizontalCenter: parent.horizontalCenter
@@ -333,7 +355,6 @@ Item {
                         CircularGauge {
                            id: speedgauge
                            scale: 1
-                           //value: 0 * velo_scale
                            value: velo_scale * h.historyList[lastindex].speed
                        }
                         ComboBox {
@@ -385,7 +406,6 @@ Item {
                             id: directiongauge
                             minimumValue: -30
                             maximumValue: 30
-                            //value: 0
                             value: velo_scale * h.historyList[lastindex].servo
                             scale: 1
                         }
@@ -394,34 +414,10 @@ Item {
             }
             //Üres terület
             GroupBox {
-                title: qsTr("UI Tesztelése:")
+                //title: qsTr("UI Tesztelése:")
                 Layout.fillHeight: true
                 anchors.right: groupBox1.right
                 anchors.left: groupBox1.left
-                ColumnLayout {
-                    Text {
-                        text: qsTr("UI tesztelése:")
-                    }
-                    Slider {
-                        id: slider1
-                        minimumValue: 0
-                        maximumValue: 400
-                        onValueChanged: {
-                            speedgauge.value = value*velo_scale;//
-                            //sensor_row1.itemAt(1).height = value
-
-                        }
-                    }
-                    Slider {
-                        minimumValue: -30
-                        maximumValue: 30
-                        onValueChanged: {
-                            directiongauge.value = value;//irany
-                        }
-                    }
-
-
-                }
             }
 
         }

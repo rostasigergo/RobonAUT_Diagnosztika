@@ -17,10 +17,10 @@ ApplicationWindow {
 
     Connections {
         target: h
-        onHistoryListChanged: mainFormControl.log({ message: lastindex + ": " + "Sebesség: " + h.historyList[lastindex].speed + " Irány: " + h.historyList[lastindex].servo +" Akkumulátor feszültség: " +h.historyList[lastindex].battery, colorCode: "yellow" });
+        onHistoryListChanged: mainFormControl.log({ message: (h.historyList.length - 1) + ": Státusz: " + h.historyList[h.historyList.length - 1].statusName + ";   Sebesség: " + h.historyList[h.historyList.length - 1].speed.toFixed(2) + ";   Irány: " + h.historyList[h.historyList.length - 1].servo.toFixed(2) +";   Akkumulátor feszültség: " +h.historyList[h.historyList.length - 1].battery.toFixed(2) + " [V];", colorCode: "yellow",logIndex: (h.historyList.length - 1) });
         }
 
-    property int lastindex: h.historyList.length - 1
+    property int lastindex: 0//h.historyList.length - 1
 
 
 
@@ -138,7 +138,7 @@ ApplicationWindow {
         onButtonClicked: {
             if (clickedButton == StandardButton.Ok){
                 kerekatmero = wheeldiameterinput.text
-                mainFormControl.log({ message: "Kerék átmérő állítva " + kerekatmero + " cm-re!", colorCode: "red" });
+                mainFormControl.log({ message: "Kerék átmérő állítva " + kerekatmero + " cm-re!", colorCode: "red", logIndex: -1 });
                 //velo_scale nem frissül!!!!
             }
             else{
@@ -188,7 +188,7 @@ ApplicationWindow {
         onButtonClicked: {
             if (clickedButton == StandardButton.Ok){
                 attetel = attetelinput.text
-                mainFormControl.log({ message: "Áttétel állítva, új értéke: " + kerekatmero, colorCode: "red" });
+                mainFormControl.log({ message: "Áttétel állítva, új értéke: " + kerekatmero, colorCode: "red", logIndex: -1 });
                 //velo_scale nem frissül!!!!
             }
             else{
@@ -286,7 +286,7 @@ ApplicationWindow {
         onButtonClicked: {
             if (clickedButton == StandardButton.Ok){
                 c.setPortName(availablePorts[selectedCOM]);
-                //mainFormControl.log({ message: lastindex + ": " + "Sebesség: " + h.historyList[lastindex].speed + " Irány: " + h.historyList[lastindex].servo +" Akkumulátor feszültség: " +h.historyList[lastindex].battery, colorCode: "yellow" });
+                //mainFormControl.log({ message: lastindex + ": " + "Sebesség: " + h.historyList[lastindex].speed + " Irány: " + h.historyList[lastindex].servo +" Akkumulátor feszültség: " +h.historyList[lastindex].battery, colorCode: "yellow", logIndex: -1 });
             }
             else{
                 //
