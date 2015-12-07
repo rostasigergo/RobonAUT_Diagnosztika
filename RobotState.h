@@ -76,10 +76,15 @@ public:
     /** Sorosítja az objektumot a megadott streambe. */
     //void WriteTo(QDataStream& stream) const;
 
-    /** Beolvassa az objektumot a streamből. */
+    /**
+     * @brief A kommunikációs osztálytól kapott streamból kiolvassa az egyes szenzorok értékeit
+     *  a megfelelő sorendben és eltárolja a heyi változóiban
+     */
     void ReadFrom(QDataStream& stream);
 
-    /** Olvaható formában visszaadja az állapotot. */
+    /**
+     * @brief Olvaható formában visszaadja a robot állapotát.
+    */
     QString getStatusName() const;
 
 signals:

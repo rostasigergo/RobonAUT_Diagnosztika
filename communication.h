@@ -8,7 +8,9 @@
 #include <QDataStream>
 #include <memory>
 /**
- * @brief Kommunikációs osztály, a soros kommunikációt valósítja meg
+ * @brief Kommunikációs osztály, a soros kommunikációt valósítja meg a COM soros porton kereszül.
+ * A robotproxy osztály küldi el neki karaktertömb formájában a parancsokat melyeket a robotnak közvetít majd veszi sz onnan érkező
+ * adatcsomagot és visszaadja a stream objektumot feldolgozásra az msgReady signal segítségével.
 */
 
 class Communication : public QObject
@@ -26,7 +28,9 @@ public:
     */
     Q_PROPERTY(bool isConnected READ isConnected WRITE setIsConnected NOTIFY isConnectedChanged)
     bool isConnected() const { return _isConnected; }
-
+    /**
+      * @brief Az elérhető soros portok listája
+    */
     Q_PROPERTY(QList<QString> availablePorts READ availablePorts NOTIFY availablePortsChanged)
     QList<QString> availablePorts() { return _availablePorts; }
 
@@ -44,9 +48,13 @@ signals:
      * @brief A kapcsolat létrejött a soros porttal
      */
     void connected();
-
+    /**
+      * @brief A kapcsolódás státusza változott (connect vagy disconnect történt)
+    */
     void isConnectedChanged();
-
+    /**
+      * @brief Megváltozott az elérhető portok listája
+    */
     void availablePortsChanged();
 
 public slots:
@@ -64,11 +72,21 @@ public slots:
      * @brief disconnect: bezárja a jeleleg nyitva lévő soros portot
      */
     void disconnect();
-
+    /**
+      * @brief kiadja a disconnected() signalt
+    */
     void processClose();
-
+    /**
+      * @brief A port nevének beállítása
+    */
     void setPortName(QString& portName);
+    /**
+      * @brief port beállítása már létező port alapján
+    */
     void setPort(QSerialPortInfo& port);
+    /**
+      * @brief törli az elérhető portok listáját majd újra föltölti az elérhető portokkal
+    */
     void updateAvailablePorts();
 
 private:

@@ -31,7 +31,7 @@ public:
     Q_PROPERTY(bool isOnline READ isOnline WRITE setIsOnline NOTIFY isOnlineChanged)
 
     /**
-     * @brief isOnline ha a robot a megfelelő (ACK) üzenettel reagál a (HELLO) parancsra a robot online van.
+     * @brief Ha a robot online van, ekkor ez a függvény true értéket ad vissza
      */
     bool isOnline() const { return _isOnline; }
 
@@ -49,6 +49,10 @@ public slots:
     //void sendCommand(enum Command cmd);
     //void setMode(enum Mode mode);
     void processMsgFromRobot(QDataStream& msg);
+    /**
+     * @brief checkRobotOnline ha a robot a megfelelő (ACK) üzenettel reagál a (HELLO) parancsra a robot online van.
+     */
+
     void checkRobotOnline();
     void commTimeout();
     void CommDisconnect();
