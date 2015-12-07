@@ -229,13 +229,12 @@ ApplicationWindow {
                     ListElement { text: "COM11"; }
                     ListElement { text: "COM12"; }
                 }*/
-                menu: ListModel {
+                model: c.availablePorts
                     /*Repeater {
                         model: availablePorts
                         MenuItem { text: names}
 
                     }*/
-                }
                 onCurrentIndexChanged: {
                     selectedCOM = currentIndex
                     /*selectedCOM = currentIndex + 1;

@@ -91,7 +91,7 @@ void Communication::setPort(QSerialPortInfo &port)
 
 void Communication::updateAvailablePorts()
 {
-    QList<QString> &names = this->_availablePorts;
+    QStringList &names = this->_availablePorts;
 
     names.clear();
 

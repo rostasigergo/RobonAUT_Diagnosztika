@@ -19,8 +19,8 @@ public:
     Q_PROPERTY(bool isConnected READ isConnected WRITE setIsConnected NOTIFY isConnectedChanged)
     bool isConnected() const { return _isConnected; }
 
-    Q_PROPERTY(QList<QString> availablePorts READ availablePorts NOTIFY availablePortsChanged)
-    QList<QString> availablePorts() { return _availablePorts; }
+    Q_PROPERTY(QStringList availablePorts READ availablePorts NOTIFY availablePortsChanged)
+    QStringList availablePorts() { return _availablePorts; }
 
 
 signals:
@@ -47,7 +47,7 @@ private:
     std::unique_ptr<QDataStream> _recv_stream;
     quint32 _msg_len;
     bool _isConnected;
-    QList<QString> _availablePorts;
+    QStringList _availablePorts;
 
     void setIsConnected(bool isConnected) { _isConnected = isConnected; emit isConnectedChanged(); }
 };
