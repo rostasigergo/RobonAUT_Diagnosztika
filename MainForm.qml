@@ -200,15 +200,7 @@ Item {
                                     width: 40
                                     height: 20
                                     color: colorCode
-                                    MouseArea {
-                                        anchors.fill: parent
-                                        onClicked: if (!onLineAdatok.checked){
-                                                       if (eventLogModel.get(index).logIndex > -1){
-                                                            lastindex = eventLogModel.get(index).logIndex;
-                                                            eventLogger.currentIndex = index;
-                                                       }
-                                                   }
-                                        }
+
                                 }
                                 Text {
                                     text: message
@@ -217,6 +209,16 @@ Item {
                                 }
                                 spacing: 10
                                 }
+                            MouseArea {
+                                anchors.top: parent.top
+                                anchors.bottom: parent.bottom
+                                width: row2.width
+                                onClicked: if (!onLineAdatok.checked && eventLogModel.get(index).logIndex > -1){
+                                                    lastindex = eventLogModel.get(index).logIndex;
+                                                    eventLogger.currentIndex = index;
+                                               }
+                                }
+
                             property int logIndex: 0
                           }
                         model: ListModel {
