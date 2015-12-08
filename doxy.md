@@ -43,7 +43,7 @@
 
 A kommunikáció menete a következő:
 
-
+bÉLA ÁTKIABÁL A SZOMSZÉDBA
 
 **sequence**
 Alice->Bob: Hello Bob, how are you?
