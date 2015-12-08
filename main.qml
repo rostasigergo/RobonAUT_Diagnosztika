@@ -87,7 +87,7 @@ ApplicationWindow {
     //Property
     property real velo_scale: 1
     property real kerekatmero: 10
-    property real attetel: 1
+    property real attetel: 31.5
 
 
     MainForm {
@@ -140,7 +140,7 @@ ApplicationWindow {
             if (clickedButton == StandardButton.Ok){
                 kerekatmero = wheeldiameterinput.text
                 mainFormControl.log({ message: "Kerék átmérő állítva " + kerekatmero + " cm-re!", colorCode: "red", logIndex: -1 });
-                //velo_scale nem frissül!!!!
+                velo_scale = (1/attetel)*((kerekatmero/10)*2*Math.PI)*(1/3.6)
             }
             else{
                 //

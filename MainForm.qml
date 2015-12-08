@@ -2,6 +2,8 @@ import QtQuick 2.5
 import QtQuick.Layouts 1.1
 import QtQuick.Extras 1.4
 import QtQuick.Controls 1.4
+import com.RobotState 1.0
+import com.RobotProxy 1.0
 
 import "UIElements"
 
@@ -41,8 +43,9 @@ Item {
                             }
                             onClicked: {
                                 log({ message: "Start...", colorCode: "green", logIndex: -1 });
+                                rp.sendCommand(RobotProxy.Accelerate)
                             }
-                            enabled: false
+                            enabled: rp.isOnline
 
                         }
                         Button {
@@ -51,8 +54,9 @@ Item {
                             text: qsTr("Stop")
                             onClicked: {
                                 log({ message: "Stop...", colorCode: "red", logIndex: -1 });
+                                rp.sendCommand(RobotProxy.Brake)
                             }
-                            enabled: false
+                            enabled: rp.isOnline
                         }
                         Text {
                             Layout.fillWidth: true
@@ -382,11 +386,11 @@ Item {
                                 //console.debug(cbItems.get(currentIndex).text + ", " + cbItems.get(currentIndex).color)
                                 switch(currentIndex){
                                 case 0:
-                                    velo_scale = 0.5*kerekatmero/100/attetel*3.6;
-                                    speedgauge.maximumValue = 72;
+                                    velo_scale = (1/attetel)*((kerekatmero/10)*2*Math.PI)*(1/3.6)
+                                    speedgauge.maximumValue = 40;
                                     break;
                                 case 1:
-                                    velo_scale = 0.5*kerekatmero/100/attetel;//d->r 0.5,
+                                    velo_scale = (1/attetel)*((kerekatmero/10)*2*Math.PI)
                                     speedgauge.maximumValue = 27;//20
                                     break;
                                 case 2:
