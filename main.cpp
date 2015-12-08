@@ -17,6 +17,7 @@ int main(int argc, char *argv[])
     RobotProxy rp(h, c);
 
     qmlRegisterType<RobotState>("com.RobotState", 1, 0, "RobotState");
+    qmlRegisterUncreatableType<RobotProxy>("com.RobotProxy", 1, 0, "RobotProxy", "");
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty("rp", &rp);
     engine.rootContext()->setContextProperty("c", &c);
