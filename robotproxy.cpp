@@ -56,3 +56,39 @@ void RobotProxy::CommDisconnect()
 {
     this->setIsOnline(false);
 }
+
+void RobotProxy::setMode(enum Mode mode)
+{
+
+    switch(mode)
+    {
+    case RobotProxy::Mode::Auto:
+        _communication.send("MODE_AUTO\r\n");
+        break;
+    case RobotProxy::Mode::Manual:
+        _communication.send("MODE_MANUAL\r\n");
+    }
+
+    this->refreshState();
+}
+
+void RobotProxy::sendCommand(enum Command cmd)
+{
+    switch(cmd)
+    {
+    case RobotProxy::Command::Left:
+        _communication.send("CMD_LEFT\r\n");
+        break;
+    case RobotProxy::Command::Right:
+        _communication.send("CMD_RIGHT\r\n");
+        break;
+    case RobotProxy::Command::Accelerate:
+        _communication.send("CMD_ACCELERATE\r\n");
+        break;
+    case RobotProxy::Command::Brake:
+        _communication.send("CMD_BRAKE\r\n");
+        break;
+    }
+
+    this->refreshState();
+}

@@ -41,8 +41,8 @@ signals:
 
 public slots:
     void refreshState();
-    //void sendCommand(enum Command cmd);
-    //void setMode(enum Mode mode);
+    void sendCommand(enum Command cmd);
+    void setMode(enum Mode mode);
     void processMsgFromRobot(QDataStream& msg);
     void checkRobotOnline();
     void commTimeout();
