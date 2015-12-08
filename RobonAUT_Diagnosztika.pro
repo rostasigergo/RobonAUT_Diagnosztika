@@ -20,7 +20,8 @@ include(deployment.pri)
 FORMS += \
     UIElements/LineSensor.ui \
 
-DISTFILES +=
+DISTFILES += \
+    doxy.md
 
 HEADERS += \
     communication.h \
