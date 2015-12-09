@@ -2,6 +2,7 @@ import QtQuick 2.5
 import QtQuick.Layouts 1.1
 import QtQuick.Extras 1.4
 import QtQuick.Controls 1.4
+import QtQuick.Controls.Styles 1.4
 import com.RobotState 1.0
 import com.RobotProxy 1.0
 
@@ -372,6 +373,9 @@ Item {
                            id: speedgauge
                            scale: 1
                            value: velo_scale * h.historyList[lastindex].speed
+                           style: CircularGaugeStyle {
+                               labelStepSize: 2
+                           }
                        }
                         ComboBox {
                          //currentIndex: 3
@@ -380,7 +384,7 @@ Item {
                              id: cbItems
                              ListElement { text: "Sebesség     [Km/h]"; color: "Green" }
                              ListElement { text: "Sebesség     [m/s]"; color: "Green" }
-                             ListElement { text: "Szögsebesség [deg/s]"; color: "Green" }
+                             //ListElement { text: "Szögsebesség [deg/s]"; color: "Green" }
                            }
                             onCurrentIndexChanged: {
                                 //console.debug(cbItems.get(currentIndex).text + ", " + cbItems.get(currentIndex).color)
@@ -398,7 +402,6 @@ Item {
                                     speedgauge.maximumValue = 400*attetel;
                                     break;
                                 }
-                                //speedgauge.value = slider1.value * velo_scale;//! frissítés váltáskor
                                 //spedgauge.value = velo_scale * h.historyList[lastindex].speed;
                             }
                          }
@@ -424,6 +427,11 @@ Item {
                             maximumValue: 30
                             value: h.historyList[lastindex].servo
                             scale: 1
+                            style: CircularGaugeStyle {
+                                minimumValueAngle: -90
+                                maximumValueAngle: 90
+                                labelStepSize: 5
+                            }
                         }
                     }
                 }
