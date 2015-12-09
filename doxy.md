@@ -15,6 +15,7 @@
  * **RobotProxy**
  Ez az osztály végzi a robot progam felé történő interfacelését, ez az osztály tartja kapcsolatban a kommunikációt
  az adatok tárolásával és ezen kereszül történik a **parancsok kiadása** is.
+ Ezen kívül robotproxy osztály végzi a C++ oldal vezérlését, itt példányosodik a Communication és a RobotStateHistory is
 
  * **RobotStateHistory**
  A robot által **visszaküldött állapotok tárolására** szolgál , itt lehet visszakeresni a korábbi szenzorképeket is,
