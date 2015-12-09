@@ -61,6 +61,7 @@ Ezt a fogadó oldalon feldolgozzuk és megjlenítjük a HMI-n.
 
 @section Státuszok
 
+
 A Robot lehetséges státuszai:
 
 * Manuális
@@ -71,4 +72,10 @@ A Robot lehetséges státuszai:
 
  @section Robot Robot:
   A robot központi vezérlpje egy STM32F4 panelen található, ezen fut egy FreeRTOS operációs rendszer
+
+@section Video Video a programról
+
+[TimeAUT telemetria](http://www.youtube.com/watch?v=7NPC47qMJVg)
+
+A fenti videóban található a program ismertetése.
 
