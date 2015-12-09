@@ -437,18 +437,13 @@ Item {
                             onCurrentIndexChanged: {
                                 switch(currentIndex){
                                 case 0:
-                                    velo_scale = (1/attetel)*((kerekatmero/10)*2*Math.PI)*(1/3.6)
+                                    velo_scale = (1/attetel)*((kerekatmero/10)*2*Math.PI)
                                     speedgauge.maximumValue = 40;
                                     break;
                                 case 1:
-                                    velo_scale = (1/attetel)*((kerekatmero/10)*2*Math.PI)
+                                    velo_scale = (1/attetel)*((kerekatmero/10)*2*Math.PI)*(1/3.6)
                                     speedgauge.maximumValue = 25;
                                     break;
-                                case 2:
-                                    velo_scale = 1;
-                                    speedgauge.maximumValue = 400*attetel;
-                                    break;
-                                }
                             }
                          }
                     }
