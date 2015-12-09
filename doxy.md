@@ -40,7 +40,25 @@ Program rendelkezik egy QML-ben készült felhasználói felülettel is.
 
   * A képen a HMI látható, jobb oldalt az autó sebessége és az első tengely irányvektora,
   felette az első és hátsó vonalszenzorsor adatai, jobb oldalt a csatlakozáshoz és parancskiadáshoz való beavatkozók
-  középen pedi az event log látható.
+  középen pedig az event log látható.
+
+A HMI frissítése a beérkező adatok függvényében történik, azonban adat csak kérésre érkezik.
+
+ @section használat A program használata:
+ * Indítás után a fő képernyő fogad minket, itt a bal felső menüben van lehetőségünka  robothoz való csatlakozásra illetve kilépésre.
+ * A menü fülön a **COM kiválaszása** gomb megynomása után felugrik egy ablak amiben a legördülő listából kiválasztható az összes a géphez kapcsolódó soros port.
+ * A kívánt port kiválasztása után ugyanebben a menüben található **Csatlakozás...** gombal tudunk a robothoz kapcsolódni.
+ * Ekkor a jobb felül lévő info panelen látható hogy meg is változik a kapcsolatunk státusza (amennyiben a robot megfelelően válaszolt).
+ * Ezután aktiválódnak a **kapcsolat ellenőrzése** és **kapcsolat bontása** menüpontok is.
+ * Az **adatok frissítéséhez kiválaszthatjuk a frissítési** sebességet a legördülő listából majd ezután az **Adatok frissítése** gombot néhány másodpercig lenyomva tartva elindul az automatikus frissítés.
+ * Az efelett a menü felett található **Start** és **Stop** gombok a robot vezérlésére szolgálnak.
+ * Amennyiben elindítottuk az automata frissítést a kijelzőkön mindíg a legfrisebb adatok jelennek meg, és a központi logban láthatóak a beérkezett állapot csomagok.
+ * Ha valamelyik régebbi csomag tartalmára vagyunk kíváncsiak a kör alakú nyomógomb alatti **online** checkbox kikattintásával lehetőségünk nyílika  log listában egy **korábbi állapot kiválasztására** amely adatai ekkor megjelennek a kijelzőn
+ * Az **online checkbox** visszakattintásával újra a legfrisebb adatok kerülnek megjelenítésre.
+ * Ezen felül a jobb oldali **Mutatós műszerek** alatt kiválasztató, hogy milyen mértékegységben jelződjön ki a sebesség (illetve a fordulatszám)
+ * A Jobb felső menüben ezen kívül lehetőségünk van még a **Beállítások** fülön az **áttételek** és a **kerékátmérő** megadására
+
+![](UPDATE.png)
 
   @section Kommunikáció
   A program a robottal egyszerű szöveges parancsok segítségével kommunikál, amelyekre a robot válaszol.
@@ -58,8 +76,10 @@ A robotproxy osztály a timer hatására küld egy kérést a communiation oszt�
 A robot minden esteben egy üzenetcsomaggal válaszol aminek első tagja a csomag mérete, majd egy kód ami tartalmazza a robot üzenetét, majd ha vannak az adataok.
 Ezt a fogadó oldalon feldolgozzuk és megjlenítjük a HMI-n.
 
+![](KOMM.png)
 
 @section Státuszok
+
 
 A Robot lehetséges státuszai:
 
@@ -70,5 +90,14 @@ A Robot lehetséges státuszai:
 * Autonóm - Ütközés
 
  @section Robot Robot:
-  A robot központi vezérlpje egy STM32F4 panelen található, ezen fut egy FreeRTOS operációs rendszer
+
+  A robot központi vezérlője egy STM32F4 panelen található, ezen fut egy FreeRTOS operációs rendszer, ezen vannak implementálva
+  a robot vezérlőszervei. Sajnos időhiány miatt a rendszer nem lett kész így a robot a tényleges mozgást csak szimulálja, de
+  az STM32 ben minden adat rendelkezésre áll ami a valós robotban is ott lenne.
+
+@section Video Video a programról
+
+[TimeAUT telemetria](http://www.youtube.com/watch?v=7NPC47qMJVg)
+
+A fenti videóban található a program ismertetése.
 
