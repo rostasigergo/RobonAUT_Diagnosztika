@@ -21,10 +21,19 @@
  A robot által **visszaküldött állapotok tárolására** szolgál , itt lehet visszakeresni a korábbi szenzorképeket is,
  illetve ennek a tartalmát jeleníti meg a felhasználói felület. (visszakereshető jeleggel)
 
+ @section A Rendszer működése:
+
+A robot magától nem kommunikál a programmal, a kommunikációt mindíg a program kezdeményezi. A felhasználói felület frissítése is úgy történik,
+hogy beállítható, hogy a felhasználói felület milyen gyakorisággal kérje le a robot információit, vagy küldjön utasítást.
+Ilyenkor a robotproxy osztály dolgozik.
+Elsőként **ellenőrzi hogy megvan-e a robot** a COM port tulsó végén, ehhez egy beköszönő üzenetet küld, amire a robot válaszol.
+Amennyiben **adatot** kérünk le a
+
+
   @section HMI HMI: Megjelelnítő felület
 
- Ezen felül van a programnak egy QML-ben készült felhasználói felülete is.
- A main() függvényben történik a fent említett osztályok példányosítása (kommunikáció, robotproxy, robotstatehistory),
+Program rendelkezik egy QML-ben készült felhasználói felülettel is.
+ A main() függvényben történik a fent említett osztályok példányosítása kommunikáció, robotproxy, robotstatehistory, (a history és a komm a proxyn belül)
     ezek signal - slot mechanizmuson kereszül kapcsolódnak a QML felülethez ahol az adatok megjelenítése történik.
 
 ![](HMI.jpg)
@@ -38,24 +47,32 @@
 
         | Parancs       | Válasz        |
         | ------------- |---------------|
-        | HELLO         | ACK           |
-        | DATAREQ       | szenzoradatok |
-        | COMMAND xy    | xy ACK        |
+        | HELLO         | HELLO_ACK     |
+        | DATAREQ       | STATUS        |
+        | COMMAND xy    | COMMAND_ACK   |
 
 A kommunikáció menete a következő:
 
-bÉLA ÁTKIABÁL A SZOMSZÉDBA
+A robotproxy osztály a timer hatására küld egy kérést a communiation osztálynak ami a COM-on keresztül továbbítja az üzenetet a robotnak.
 
-**sequence**
-Alice->Bob: Hello Bob, how are you?
-Note right of Bob: Bob thinks
-Bob-->Alice: I am good thanks!
+A robot minden esteben egy üzenetcsomaggal válaszol aminek első tagja a csomag mérete, majd egy kód ami tartalmazza a robot üzenetét, majd ha vannak az adataok.
+Ezt a fogadó oldalon feldolgozzuk és megjlenítjük a HMI-n.
 
+        | Parancs       | Válasz        |
+        | ------------- |---------------|
+        | HELLO         | HELLO_ACK     |
+        | DATAREQ       | STATUS        |
+        | COMMAND xy    | COMMAND_ACK   |
 
+ @section Státuszok
 
-Ezen kommunikációt a Robotproxy osztály irányítja
+A Robot lehetséges státuszai:
 
- @section Robotproxy Robotproxy:
+* Manuális
+* Autonóm - Indításra vár
+* Autonóm - Vonalkövetés OK
+* Autonóm - Nincs vonal
+* Autonóm - Ütközés
 
  @section Robot Robot:
   A robot központi vezérlpje egy STM32F4 panelen található, ezen fut egy FreeRTOS operációs rendszer
