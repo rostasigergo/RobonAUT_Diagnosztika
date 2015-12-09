@@ -42,14 +42,14 @@ Program rendelkezik egy QML-ben készült felhasználói felülettel is.
   felette az első és hátsó vonalszenzorsor adatai, jobb oldalt a csatlakozáshoz és parancskiadáshoz való beavatkozók
   középen pedi az event log látható.
 
-     @section Kommunikáció
-        A program a robottal egyszerű szöveges parancsok segítségével kommunikál, amelyekre a robot válaszol.
+  @section Kommunikáció
+  A program a robottal egyszerű szöveges parancsok segítségével kommunikál, amelyekre a robot válaszol.
 
-        | Parancs       | Válasz        |
-        | ------------- |---------------|
-        | HELLO         | HELLO_ACK     |
-        | DATAREQ       | STATUS        |
-        | COMMAND xy    | COMMAND_ACK   |
+ | Parancs       | Válasz        |
+ | ------------- |---------------|
+ | HELLO         | HELLO_ACK     |
+ | DATAREQ       | STATUS        |
+ | COMMAND xy    | COMMAND_ACK   |
 
 A kommunikáció menete a következő:
 
@@ -58,13 +58,8 @@ A robotproxy osztály a timer hatására küld egy kérést a communiation oszt�
 A robot minden esteben egy üzenetcsomaggal válaszol aminek első tagja a csomag mérete, majd egy kód ami tartalmazza a robot üzenetét, majd ha vannak az adataok.
 Ezt a fogadó oldalon feldolgozzuk és megjlenítjük a HMI-n.
 
-        | Parancs       | Válasz        |
-        | ------------- |---------------|
-        | HELLO         | HELLO_ACK     |
-        | DATAREQ       | STATUS        |
-        | COMMAND xy    | COMMAND_ACK   |
 
- @section Státuszok
+@section Státuszok
 
 A Robot lehetséges státuszai:
 

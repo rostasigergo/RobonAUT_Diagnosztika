@@ -73,6 +73,9 @@ signals:
     void historyChanged();
 
 public slots:
+    /**
+     * @brief A refreshState slot felelős azért hogy új adatigénylést végezzen, illetve elindít egy timert ami ha lefut azt jelenti hogy nem válaszolt a robot
+     */
     void refreshState();
     /**
       * @brief Egy új adatigénylést (DATAREQ) intéz a robot felé ami erre válaszolva visszaküldi az adatait
@@ -90,28 +93,36 @@ public slots:
       * @brief A robot felé küld egy HELLO üzenetet amire az ACK al válaszol ha ott van a vonal msik végén
     */
     void checkRobotOnline();
-
+    /**
+     * @brief commTimeout Ha timeout történik akkor megszakítja a kapcsolatot (meghívja a disconnectet)
+     */
     void commTimeout();
+    /**
+     * @brief CommDisconnect beállítja a kapcsolat állapotát hamisba
+     */
     void CommDisconnect();
 
 private:
     /**
-      * @brief a history osztáyl példánya
+      * @brief a history osztály példánya
     */
     RobotStateHistory& _history;
     /**
-      * @brief Autonóm és Manuális mód közötti váltás
+      * @brief A communication sztály példánya
     */
     Communication& _communication;
     /**
-      * @brief Autonóm és Manuális mód közötti váltás
+      * @brief Változó ami azt jelzi hogy a robottl él-e a kapcsolat
     */
     bool _isOnline;
     /**
-      * @brief Autonóm és Manuális mód közötti váltás
+      * @brief Arra figyel hogy elküldött üzenet után időben jön-e válasz
     */
     QTimer _timeoutTimer;
 
+    /**
+     * @brief The MsgType enum megadja a bejövő üzenet elején, hogy a robot milyen tipusú csomagot küldött vissza, ezzel jelezve az üzenetek vételét
+     */
     enum MsgType {
         STATUS,
         HELLO_ACK,
