@@ -444,6 +444,7 @@ Item {
                                     velo_scale = (1/attetel)*((kerekatmero/10)*2*Math.PI)*(1/3.6)
                                     speedgauge.maximumValue = 25;
                                     break;
+                                }
                             }
                          }
                     }
