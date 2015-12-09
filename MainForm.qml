@@ -33,32 +33,6 @@ Item {
                         anchors.left: parent.left
                         anchors.right: parent.right
                         spacing: 5
-                        Button {
-                            id: button1
-                            Layout.fillWidth: true
-                            text: qsTr("Start")
-                            ColorAnimation {
-                                from: "grey"
-                                to: "green"
-                                duration: 200
-                            }
-                            onClicked: {
-                                log({ message: "Start...", colorCode: "green", logIndex: -1 });
-                                rp.sendCommand(RobotProxy.Accelerate)
-                            }
-                            enabled: rp.isOnline
-
-                        }
-                        Button {
-                            id: button2
-                            Layout.fillWidth: true
-                            text: qsTr("Stop")
-                            onClicked: {
-                                log({ message: "Stop...", colorCode: "red", logIndex: -1 });
-                                rp.sendCommand(RobotProxy.Brake)
-                            }
-                            enabled: rp.isOnline
-                        }
                         Text {
                             Layout.fillWidth: true
                             text: qsTr("Frissítési sebesség: ")
@@ -93,14 +67,6 @@ Item {
                                 }
                             }
                         }
-                        /*Button {
-                            id: button3
-                            Layout.fillWidth: true
-                            text: qsTr("Beállít")
-                            onClicked: {
-                                log({ message: "Beállítás...", colorCode: "yellow", logIndex: -1 });
-                            }
-                        }*/
                         DelayButton {
                             id: button4
                             Layout.fillWidth: true
@@ -145,6 +111,89 @@ Item {
                 }
 
                 //Adatok
+                GroupBox {
+                    id: controlgroupbox
+                    Layout.minimumWidth: 150
+                    Layout.maximumWidth: 150
+                    anchors.top: controlpanel.top
+                    anchors.bottom: controlpanel.bottom
+                    ColumnLayout {
+                        spacing: 5
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+                        Text{
+                            text: qsTr("Irányítás:")
+                        }
+                        CheckBox {
+                            id: automanualcheckbox
+                            Layout.fillWidth: true
+                            text: qsTr("Automata bekapcsolva")
+                            checked: true
+                            onCheckedChanged: {
+                                if (checked) {
+                                    automanualcheckbox.text = "Automata bekapcsolva!";
+                                    log({ message: "Automata mód bekapcsolva!", colorCode: "red", logIndex: -1 });
+                                    rp.setMode(RobotProxy.Auto);
+                                }
+                                else {
+                                    automanualcheckbox.text = "Manual bekapcsolva!";
+                                    log({ message: "Manuál mód bekapcsolva!", colorCode: "red", logIndex: -1 });
+                                    rp.setMode(RobotProxy.Manual);
+                                }
+                            }
+                            enabled: rp.isOnline
+                        }
+                        Button {
+                            id: button1
+                            anchors.left: parent.left
+                            anchors.right: parent.right
+                            text: qsTr("Gyorsít!")
+                            onClicked: {
+                                log({ message: "Gyorsítás parancs elküldve!", colorCode: "white", logIndex: -1 });
+                                rp.sendCommand(RobotProxy.Accelerate)
+                            }
+                            enabled: rp.isOnline// && automanualcheckbox.checked
+
+                        }
+                        Button {
+                            id: button2
+                            anchors.left: parent.left
+                            anchors.right: parent.right
+                            text: qsTr("Lassít!")
+                            onClicked: {
+                                log({ message: "Lassítás parancs elküldve!", colorCode: "white", logIndex: -1 });
+                                rp.sendCommand(RobotProxy.Brake)
+                            }
+                            enabled: rp.isOnline// && automanualcheckbox.checked
+                        }
+                        Row {
+                            spacing: 5
+                            anchors.left: parent.left
+                            anchors.right: parent.right
+                            //Layout.fillWidth: true
+                            Button {
+                                id: leftbutton
+                                text: qsTr("Balra!")
+                                width: (parent.width/2 - parent.spacing/2)
+                                onClicked: {
+                                    log({ message: "Balra parancs elküldve!", colorCode: "white", logIndex: -1 });
+                                    rp.sendCommand(RobotProxy.Left)
+                                }
+                                enabled: rp.isOnline// && automanualcheckbox.checked
+                            }
+                            Button {
+                                id: rightbutton
+                                text: qsTr("Jobbra!")
+                                width: (parent.width/2 - parent.spacing/2)
+                                onClicked: {
+                                    log({ message: "Jobbra parancs elküldve!", colorCode: "white", logIndex: -1 });
+                                    rp.sendCommand(RobotProxy.Right)
+                                }
+                                enabled: rp.isOnline// && automanualcheckbox.checked
+                            }
+                        }
+                    }
+                }
                 GroupBox {
                     Layout.fillWidth: true
                     Layout.minimumHeight: controlpanel.height
@@ -384,10 +433,8 @@ Item {
                              id: cbItems
                              ListElement { text: "Sebesség     [Km/h]"; color: "Green" }
                              ListElement { text: "Sebesség     [m/s]"; color: "Green" }
-                             //ListElement { text: "Szögsebesség [deg/s]"; color: "Green" }
                            }
                             onCurrentIndexChanged: {
-                                //console.debug(cbItems.get(currentIndex).text + ", " + cbItems.get(currentIndex).color)
                                 switch(currentIndex){
                                 case 0:
                                     velo_scale = (1/attetel)*((kerekatmero/10)*2*Math.PI)*(1/3.6)
@@ -395,14 +442,13 @@ Item {
                                     break;
                                 case 1:
                                     velo_scale = (1/attetel)*((kerekatmero/10)*2*Math.PI)
-                                    speedgauge.maximumValue = 27;//20
+                                    speedgauge.maximumValue = 25;
                                     break;
                                 case 2:
                                     velo_scale = 1;
                                     speedgauge.maximumValue = 400*attetel;
                                     break;
                                 }
-                                //spedgauge.value = velo_scale * h.historyList[lastindex].speed;
                             }
                          }
                     }
