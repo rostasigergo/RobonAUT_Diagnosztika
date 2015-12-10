@@ -27,6 +27,7 @@ public:
         Auto_line_lost = 3,
         Auto_crashed = 4
     };
+    Q_ENUM(Status)
 
     /**
      * @brief Konstruktor
