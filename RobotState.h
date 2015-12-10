@@ -78,21 +78,21 @@ public:
     void setServo(float servo) { _servo = servo; emit servoChanged(); }
 
     /**
-     * @brief Az aktuális állapot QStringként.
+     * @brief Az akkumulátorfeszültség beolvasása
     */
     Q_PROPERTY(float battery READ battery WRITE setBattery NOTIFY batteryChanged)
     float battery() const { return _battery; }
     void setBattery(float battery) { _battery = battery;  emit batteryChanged(); }
 
     /**
-     * @brief Az aktuális állapot QStringként.
+     * @brief Az első vonalszenzorsor beolvasása
     */
     Q_PROPERTY(QList<int> front_line READ front_line WRITE setFront_line MEMBER _front_line NOTIFY front_lineChanged)
     QList<int> front_line() const { return _front_line; }
     void setFront_line(QList<int> front_line) { _front_line = front_line; emit front_lineChanged(); }
 
     /**
-     * @brief Az aktuális állapot QStringként.
+     * @brief Az hátsó vonalszenzor beolvasása
     */
     Q_PROPERTY(QList<int> back_line READ back_line WRITE setBack_line MEMBER _back_line NOTIFY back_lineChanged)
     QList<int> back_line() const { return _back_line; }
@@ -104,13 +104,13 @@ public:
     // In QML, it will be accessible as model.statusName
     Q_PROPERTY(QString statusName READ getStatusName NOTIFY statusChanged)
 
-    /** @brief
-     * Sorosítja az objektumot a megadott streambe.
+    /**
+     * @brief Sorosítja az objektumot a megadott streambe.
     */
     //void WriteTo(QDataStream& stream) const;
 
-    /** @brief
-     *  Beolvassa az objektumot a streamből.
+    /**
+     * @brief Beolvassa az objektumot a streamből.
     */
     void ReadFrom(QDataStream& stream);
 
