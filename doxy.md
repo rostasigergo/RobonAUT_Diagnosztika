@@ -4,6 +4,8 @@
 
  @section Architektura Architektura átekintés
 
+@see A Rendszer működése
+
  A Diagnosztikai rendszer négy központi elemből áll:
 
  * **Communication**
@@ -25,9 +27,18 @@
 
 A robot magától nem kommunikál a programmal, a kommunikációt mindíg a program kezdeményezi. A felhasználói felület frissítése is úgy történik,
 hogy beállítható, hogy a felhasználói felület milyen gyakorisággal kérje le a robot információit, vagy küldjön utasítást.
-Ilyenkor a robotproxy osztály dolgozik.
-Elsőként **ellenőrzi hogy megvan-e a robot** a COM port tulsó végén, ehhez egy beköszönő üzenetet küld, amire a robot válaszol.
-Amennyiben **adatot** kérünk le a
+
+A timer hatására a RobotProxy osztály a friissítés során a RobotProxy osztály kap egy
+Elsőként **ellenőrzi hogy megvan-e a robot** a COM port tulsó végén (isOnline()), ehhez egy beköszönő üzenetet küld, amire a robot válaszol. @see Kommunikáció
+
+Ezután minden timer híváskor a RobotProxy küld egy send(DATAREQUEST) hívást a Communicationnak , továbbküldi a robotnak.
+A robot válasza után (mikor az egész üzenet megjött) a communication kiadja az msgReady() signalt, ennek hatására a RobotProxy földolgozza a recieve streamból az adatokat
+beteszi őket egy RobotState-ba, amit bepushol a RobotStateHistory-ba. A RobotStateHistory a változásáról a historyCHnaged() signalon kereszül jelez a HMI-nek, ami enne hatására 
+átáll az utolsó elemre a RobotStateHistory-ban.
+
+Korábbi állapotok visszakeresésénél pedig a History tömb korábbi elemeire heéyezzük át a mutatót.
+
+![](UMLdiag.png)
 
 
   @section HMI HMI: Megjelelnítő felület
@@ -81,7 +92,6 @@ Ezt a fogadó oldalon feldolgozzuk és megjlenítjük a HMI-n.
 
 @section Státuszok
 
-
 A Robot lehetséges státuszai:
 
 * Manuális
@@ -90,15 +100,28 @@ A Robot lehetséges státuszai:
 * Autonóm - Nincs vonal
 * Autonóm - Ütközés
 
+@warning Manuálisból autonómba álláskor a szervó és a gáz is nullába áll vissza !
+
  @section Robot Robot:
 
   A robot központi vezérlője egy STM32F4 panelen található, ezen fut egy FreeRTOS operációs rendszer, ezen vannak implementálva
   a robot vezérlőszervei. Sajnos időhiány miatt a rendszer nem lett kész így a robot a tényleges mozgást csak szimulálja, de
   az STM32 ben minden adat rendelkezésre áll ami a valós robotban is ott lenne.
 
+@Warning A robot a bemeneti parancsokra hirtelen reagál, ez azért van mert az STM ben jelenlege gy szimulátor fut, ami ugrásszerűen változtatja a sebesség érékeket
+
 @section Video Video a programról
 
 [TimeAUT telemetria](https://youtu.be/qujEQ3mOBeo)
 
 A fenti videóban található a program ismertetése.
+
+@section Branchek Branchek
+
+Az alábbi képeken pedig a fejlesztési folyamat látható:
+
+![](branches2.jpg)
+![](branches1.jpg)
+![](branches0.jpg)
+
 
