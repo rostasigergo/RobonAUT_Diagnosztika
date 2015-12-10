@@ -311,7 +311,7 @@ Item {
                             Rectangle {
                                 anchors.bottom: parent.bottom
                                 width: 14
-                                height: h.historyList[lastindex].back_line[index]*65/4096//index
+                                height: (haveData ? h.historyList[lastindex].back_line[index]*65/4096 : 0)//index
                                 color: "lightsteelblue"
                                 Text {
                                     text: (parent.height*100/65).toFixed(0) //+ "%"
@@ -344,7 +344,7 @@ Item {
                                      id: tooltip1
                                      width: 70
                                      target: sensor_teglalapok1//sensor_row1.itemAt(index)
-                                     text: h.historyList[lastindex].back_line[index] + "/4096" //(h.historyList[lastindex].back_line[index]*100/4096).toFixed(0) + "%"
+                                     text: (haveData ? (h.historyList[lastindex].back_line[index] + "/4096") : "Nincs adat!") //(h.historyList[lastindex].back_line[index]*100/4096).toFixed(0) + "%"
                                 }
                             }
                         }
@@ -359,7 +359,7 @@ Item {
                             Rectangle {
                                 anchors.bottom: parent.bottom
                                 width: 14
-                                height: h.historyList[lastindex].front_line[index]*65/4096//index
+                                height: (haveData ? h.historyList[lastindex].front_line[index]*65/4096 : 0)//index
                                 color: "lightsteelblue"
                                 Text {
                                     text: (parent.height*100/65).toFixed(0) //+ "%"
@@ -392,7 +392,7 @@ Item {
                                      id: tooltip2
                                      width: 70
                                      target: sensor_teglalapok2
-                                     text: h.historyList[lastindex].front_line[index] + "/4096" //(h.historyList[lastindex].back_line[index]*100/4096).toFixed(0) + "%"
+                                     text: (haveData ? (h.historyList[lastindex].front_line[index] + "/4096") : "Nincs adat!") //(h.historyList[lastindex].back_line[index]*100/4096).toFixed(0) + "%"
                                 }
                             }
                         }
@@ -421,15 +421,15 @@ Item {
                         CircularGauge {
                            id: speedgauge
                            scale: 1
-                           value: Math.abs(velo_scale * h.historyList[lastindex].speed)
+                           value: (haveData ? Math.abs(velo_scale * h.historyList[lastindex].speed) : 0)
                            style: CircularGaugeStyle {
                                labelStepSize: 2
                            }
                            Text {
                                anchors.bottom: parent.bottom
                                anchors.horizontalCenter: parent.horizontalCenter
-                               text: (h.historyList[lastindex].speed < 0 ? "R" : "D")
-                               color: (h.historyList[lastindex].speed < 0 ? "red" : "green")
+                               text: (haveData ? (h.historyList[lastindex].speed < 0 ? "R" : "D") : "D")
+                               color: (haveData ? (h.historyList[lastindex].speed < 0 ? "red" : "green") : "green")
                                font.pointSize: 9
                            }
                        }
@@ -474,7 +474,7 @@ Item {
                             id: directiongauge
                             minimumValue: -30
                             maximumValue: 30
-                            value: h.historyList[lastindex].servo
+                            value: (haveData ? h.historyList[lastindex].servo : 0)
                             scale: 1
                             style: CircularGaugeStyle {
                                 minimumValueAngle: -90
