@@ -425,6 +425,13 @@ Item {
                            style: CircularGaugeStyle {
                                labelStepSize: 2
                            }
+                           Text {
+                               anchors.bottom: parent.bottom
+                               anchors.horizontalCenter: parent.horizontalCenter
+                               text: (h.historyList[lastindex].speed < 0 ? "R" : "D")
+                               color: (h.historyList[lastindex].speed < 0 ? "red" : "green")
+                               font.pointSize: 9
+                           }
                        }
                         ComboBox {
                          //currentIndex: 3
