@@ -128,7 +128,7 @@ Item {
                             id: automanualcheckbox
                             Layout.fillWidth: true
                             text: qsTr("Automata bekapcsolva")
-                            checked: true
+                            checked: haveData ? !(h.historyList[lastindex].status == RobotState.Manual) : false
                             onCheckedChanged: {
                                 if (checked) {
                                     automanualcheckbox.text = "Automata bekapcsolva!";
@@ -152,19 +152,19 @@ Item {
                                 log({ message: "Gyorsítás parancs elküldve!", colorCode: "white", logIndex: -1 });
                                 rp.sendCommand(RobotProxy.Accelerate)
                             }
-                            enabled: rp.isOnline// && automanualcheckbox.checked
+                            enabled: rp.isOnline && (h.historyList[lastindex].status == RobotState.Manual)
 
                         }
                         Button {
                             id: button2
                             anchors.left: parent.left
                             anchors.right: parent.right
-                            text: qsTr("Lassít!")
+                            text: qsTr("Lassít/Tolat!")
                             onClicked: {
                                 log({ message: "Lassítás parancs elküldve!", colorCode: "white", logIndex: -1 });
                                 rp.sendCommand(RobotProxy.Brake)
                             }
-                            enabled: rp.isOnline// && automanualcheckbox.checked
+                            enabled: rp.isOnline && (h.historyList[lastindex].status == RobotState.Manual)
                         }
                         Row {
                             spacing: 5
@@ -179,7 +179,7 @@ Item {
                                     log({ message: "Balra parancs elküldve!", colorCode: "white", logIndex: -1 });
                                     rp.sendCommand(RobotProxy.Left)
                                 }
-                                enabled: rp.isOnline// && automanualcheckbox.checked
+                                enabled: rp.isOnline && (h.historyList[lastindex].status == RobotState.Manual)
                             }
                             Button {
                                 id: rightbutton
@@ -189,7 +189,7 @@ Item {
                                     log({ message: "Jobbra parancs elküldve!", colorCode: "white", logIndex: -1 });
                                     rp.sendCommand(RobotProxy.Right)
                                 }
-                                enabled: rp.isOnline// && automanualcheckbox.checked
+                                enabled: rp.isOnline && (h.historyList[lastindex].status == RobotState.Manual)
                             }
                         }
                     }
@@ -205,22 +205,22 @@ Item {
                         height: 10
                     }
                     Text{
-                        text: "Státusz: " + h.historyList[lastindex].statusName;
+                        text: "Státusz: " + (haveData ? h.historyList[lastindex].statusName : "nincs adat");
                         Layout.fillWidth: true
                         height: 10
                     }
                     Text{
-                        text: "Akkumulátor feszültség: " + h.historyList[lastindex].battery;
+                        text: "Akkumulátor feszültség: " + (haveData ? h.historyList[lastindex].battery : "nincs adat");
                         Layout.fillWidth: true
                         height: 10
                     }
                     Text{
-                        text: "Sebesség: "  + h.historyList[lastindex].speed;
+                        text: "Fordulatszám: "  + (haveData ? h.historyList[lastindex].speed : "nincs adat");
                         Layout.fillWidth: true
                         height: 10
                     }
                     Text{
-                        text: "Szervo: "  + h.historyList[lastindex].servo;
+                        text: "Szervo: "  + (haveData ? h.historyList[lastindex].servo : "nincs adat");
                         Layout.fillWidth: true
                         height: 10
                     }
@@ -421,7 +421,7 @@ Item {
                         CircularGauge {
                            id: speedgauge
                            scale: 1
-                           value: velo_scale * h.historyList[lastindex].speed
+                           value: Math.abs(velo_scale * h.historyList[lastindex].speed)
                            style: CircularGaugeStyle {
                                labelStepSize: 2
                            }

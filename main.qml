@@ -19,6 +19,7 @@ ApplicationWindow {
         }
 
     property int lastindex: (mainFormControl.onlineadatok.checked ? h.historyList.length - 1 : 0)//if(mainFormControl.onlineadatok.checked) h.historyList.length - 1
+    property bool haveData: h.historyList.length > 0
 
     function logfromCpp(msg){
         mainFormControl.log({message: msg, colorCode: "red",logIndex: -1 })
