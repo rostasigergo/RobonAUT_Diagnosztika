@@ -98,7 +98,7 @@ A Robot lehetséges státuszai:
 
 @section Video Video a programról
 
-[TimeAUT telemetria](http://www.youtube.com/watch?v=7NPC47qMJVg)
+[TimeAUT telemetria](https://youtu.be/qujEQ3mOBeo)
 
 A fenti videóban található a program ismertetése.
 
