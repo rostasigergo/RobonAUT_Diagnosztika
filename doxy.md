@@ -51,12 +51,13 @@ A HMI frissítése a beérkező adatok függvényében történik, azonban adat 
  * Ekkor a jobb felül lévő info panelen látható hogy meg is változik a kapcsolatunk státusza (amennyiben a robot megfelelően válaszolt).
  * Ezután aktiválódnak a **kapcsolat ellenőrzése** és **kapcsolat bontása** menüpontok is.
  * Az **adatok frissítéséhez kiválaszthatjuk a frissítési** sebességet a legördülő listából majd ezután az **Adatok frissítése** gombot néhány másodpercig lenyomva tartva elindul az automatikus frissítés.
- * Az efelett a menü felett található **Start** és **Stop** gombok a robot vezérlésére szolgálnak.
+ * Az efelett a menü felett található **Gyorsítás** , **Lassítás** , **Jobbra** , **Balra** gombok a robot vezérlésére szolgálnak.
  * Amennyiben elindítottuk az automata frissítést a kijelzőkön mindíg a legfrisebb adatok jelennek meg, és a központi logban láthatóak a beérkezett állapot csomagok.
  * Ha valamelyik régebbi csomag tartalmára vagyunk kíváncsiak a kör alakú nyomógomb alatti **online** checkbox kikattintásával lehetőségünk nyílika  log listában egy **korábbi állapot kiválasztására** amely adatai ekkor megjelennek a kijelzőn
  * Az **online checkbox** visszakattintásával újra a legfrisebb adatok kerülnek megjelenítésre.
  * Ezen felül a jobb oldali **Mutatós műszerek** alatt kiválasztató, hogy milyen mértékegységben jelződjön ki a sebesség (illetve a fordulatszám)
  * A Jobb felső menüben ezen kívül lehetőségünk van még a **Beállítások** fülön az **áttételek** és a **kerékátmérő** megadására
+ @warning A kerékátmérő és az áttétel hibás beállítása a sebesség hibás kijelzését eredményezi
 
 ![](UPDATE.png)
 

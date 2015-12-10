@@ -4,6 +4,11 @@
 #include <QDataStream>
 #include <QString>
 
+
+/**
+ * @brief A RobotState class feladata a robot állapotának tárolása, ebben van leírva a robot jelenlegi viselkedése, az egyes műszerek beállítási értéke
+ * mint például a gáz vagy a szervó állása
+ */
 class RobotState : public QObject
 {
     Q_OBJECT
@@ -126,29 +131,36 @@ public slots:
     void incrementSpeed();
 
 private:
-
+    /** @brief A robot autonomitásának állapota */
     Status _status;
+    /** @brief Beállítja a statusNames értékeit. A konstruktor hívja. */
     float _systick;
+    /** @brief A gázkar állása */
     float _throttle;
+    /** @brief Az autó sebessége (m/s) */
     float _speed;
+    /** @brief A servo állása */
     float _servo;
+    /** @brief Az akkumulátor feszültségszintje (mV) */
     float _battery;
+    /** @brief Az első vonalszenzor adatainak vektora */
     QList<int> _front_line;
+    /** @brief Az hátsó vonalszenzor adatainak vektora */
     QList<int> _back_line;
 
 
-    /** Az állapotok és szöveges verziójuk közti megfeleltetés.
-     * A getStatusName() használja. */
+    /** @biref Az állapotok és szöveges verziójuk közti megfeleltetés.
+     * @biref A getStatusName() használja. */
     static std::map<int,QString> statusNames;
 
-    /** Beállítja a statusNames értékeit. A konstruktor hívja. */
+    /** @brief Beállítja a statusNames értékeit. A konstruktor hívja. */
     void initStatusNames();
 };
 
-/** Beburkolja a RobotState.WriteTo metódust. */
+/** @brief Beburkolja a RobotState.WriteTo metódust. */
 QDataStream &operator<<(QDataStream &, const RobotState &);
 
-/** Beburkolja a RobotState.ReadFrom metódust. */
+/** @brief Beburkolja a RobotState.ReadFrom metódust. */
 QDataStream &operator>>(QDataStream &, RobotState &);
 
 #endif // ROBOTSTATE_H
